@@ -22,3 +22,6 @@ require (
 )
 
 replace github.com/ozonmp/omp-template-api/pkg/omp-template-api => ./pkg/omp-template-api
+	github.com/gammazero/workerpool v1.1.2 // indirect
+	github.com/golang/mock v1.6.0 // indirect
+)
