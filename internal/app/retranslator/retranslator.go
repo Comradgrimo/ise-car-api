@@ -3,11 +3,11 @@ package retranslator
 import (
 	"time"
 
-	"github.com/ozonmp/omp-demo-api/internal/app/consumer"
-	"github.com/ozonmp/omp-demo-api/internal/app/producer"
-	"github.com/ozonmp/omp-demo-api/internal/app/repo"
-	"github.com/ozonmp/omp-demo-api/internal/app/sender"
-	"github.com/ozonmp/omp-demo-api/internal/model"
+	"github.com/ozonmp/ise-car-api/internal/app/consumer"
+	"github.com/ozonmp/ise-car-api/internal/app/producer"
+	"github.com/ozonmp/ise-car-api/internal/app/repo"
+	"github.com/ozonmp/ise-car-api/internal/app/sender"
+	"github.com/ozonmp/ise-car-api/internal/model"
 
 	"github.com/gammazero/workerpool"
 )
@@ -21,7 +21,7 @@ type Config struct {
 	ChannelSize uint64
 
 	ConsumerCount  uint64
-	ConsumeSize    uint64
+	ConsumeSize    uint64    // batch size
 	ConsumeTimeout time.Duration
 
 	ProducerCount uint64
@@ -32,14 +32,14 @@ type Config struct {
 }
 
 type retranslator struct {
-	events     chan model.SubdomainEvent
+	events     chan model.CarEvent
 	consumer   consumer.Consumer
 	producer   producer.Producer
 	workerPool *workerpool.WorkerPool
 }
 
 func NewRetranslator(cfg Config) Retranslator {
-	events := make(chan model.SubdomainEvent, cfg.ChannelSize)
+	events := make(chan model.CarEvent, cfg.ChannelSize)
 	workerPool := workerpool.New(cfg.WorkerCount)
 
 	consumer := consumer.NewDbConsumer(
@@ -52,6 +52,7 @@ func NewRetranslator(cfg Config) Retranslator {
 		cfg.ProducerCount,
 		cfg.Sender,
 		events,
+		cfg.Repo,
 		workerPool)
 
 	return &retranslator{

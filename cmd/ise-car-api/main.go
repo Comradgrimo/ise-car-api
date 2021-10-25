@@ -5,7 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/ozonmp/omp-demo-api/internal/app/retranslator"
+	"github.com/ozonmp/ise-car-api/internal/app/retranslator"
 )
 
 func main() {
@@ -20,10 +20,11 @@ func main() {
 		WorkerCount:   2,
 	}
 
-	retranslator := retranslator.NewRetranslator(cfg)
-	retranslator.Start()
+	r := retranslator.NewRetranslator(cfg)
+	r.Start()
 
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
 	<-sigs
+	r.Close()
 }
