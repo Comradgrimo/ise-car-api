@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ozonmp/omp-demo-api/internal/app/repo"
-	"github.com/ozonmp/omp-demo-api/internal/model"
+	"github.com/ozonmp/ise-car-api/internal/app/repo"
+	"github.com/ozonmp/ise-car-api/internal/model"
 )
 
 type Consumer interface {
@@ -15,7 +15,7 @@ type Consumer interface {
 
 type consumer struct {
 	n      uint64
-	events chan<- model.SubdomainEvent
+	events chan<- model.CarEvent
 
 	repo repo.EventRepo
 
@@ -28,7 +28,7 @@ type consumer struct {
 
 type Config struct {
 	n         uint64
-	events    chan<- model.SubdomainEvent
+	events    chan<- model.CarEvent
 	repo      repo.EventRepo
 	batchSize uint64
 	timeout   time.Duration
@@ -39,7 +39,7 @@ func NewDbConsumer(
 	batchSize uint64,
 	consumeTimeout time.Duration,
 	repo repo.EventRepo,
-	events chan<- model.SubdomainEvent) Consumer {
+	events chan<- model.CarEvent) Consumer {
 
 	wg := &sync.WaitGroup{}
 	done := make(chan bool)
@@ -61,17 +61,22 @@ func (c *consumer) Start() {
 
 		go func() {
 			defer c.wg.Done()
+
 			ticker := time.NewTicker(c.timeout)
 			for {
-				select {
-				case <-ticker.C:
-					events, err := c.repo.Lock(c.batchSize)
-					if err != nil {
-						continue
-					}
-					for _, event := range events {
+				// return with block. gets from db events and in the same time locks them in db
+				events, err := c.repo.Lock(c.batchSize)
+				if err != nil {
+					continue
+				}
+				for _, event := range events {
+					if event.Type == model.Created {
 						c.events <- event
 					}
+				}
+				select {
+				case <-ticker.C:
+					break
 				case <-c.done:
 					return
 				}

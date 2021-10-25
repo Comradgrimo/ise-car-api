@@ -1,11 +1,13 @@
 package producer
 
 import (
+	"log"
 	"sync"
 	"time"
 
-	"github.com/ozonmp/omp-demo-api/internal/app/sender"
-	"github.com/ozonmp/omp-demo-api/internal/model"
+	"github.com/ozonmp/ise-car-api/internal/app/repo"
+	"github.com/ozonmp/ise-car-api/internal/app/sender"
+	"github.com/ozonmp/ise-car-api/internal/model"
 
 	"github.com/gammazero/workerpool"
 )
@@ -20,7 +22,8 @@ type producer struct {
 	timeout time.Duration
 
 	sender sender.EventSender
-	events <-chan model.SubdomainEvent
+	events <-chan model.CarEvent
+	repo      repo.EventRepo
 
 	workerPool *workerpool.WorkerPool
 
@@ -28,11 +31,11 @@ type producer struct {
 	done chan bool
 }
 
-// todo for students: add repo
 func NewKafkaProducer(
 	n uint64,
 	sender sender.EventSender,
-	events <-chan model.SubdomainEvent,
+	events <-chan model.CarEvent,
+	repo repo.EventRepo,
 	workerPool *workerpool.WorkerPool,
 ) Producer {
 
@@ -43,6 +46,7 @@ func NewKafkaProducer(
 		n:          n,
 		sender:     sender,
 		events:     events,
+		repo:       repo,
 		workerPool: workerPool,
 		wg:         wg,
 		done:       done,
@@ -57,13 +61,23 @@ func (p *producer) Start() {
 			for {
 				select {
 				case event := <-p.events:
+					// send event to kafka
 					if err := p.sender.Send(&event); err != nil {
 						p.workerPool.Submit(func() {
-							// ...
+							//in case of error - unlock db records
+							err = p.repo.Unlock([]uint64{event.ID})
+							if err != nil {
+								log.Printf("failed to unlock event ids %v", event.ID)
+							}
 						})
 					} else {
+						// record processed, delete it from db event records
+						// call cleaners
 						p.workerPool.Submit(func() {
-							// ...
+							err = p.repo.Remove([]uint64{event.ID})
+							if err != nil {
+								log.Printf("failed to remove event records from db, id=%v", event.ID)
+							}
 						})
 					}
 				case <-p.done:

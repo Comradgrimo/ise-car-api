@@ -5,12 +5,13 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
-	"github.com/ozonmp/omp-demo-api/internal/mocks"
+	"github.com/ozonmp/ise-car-api/internal/mocks"
 )
 
 func TestStart(t *testing.T) {
-
 	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
 	repo := mocks.NewMockEventRepo(ctrl)
 	sender := mocks.NewMockEventSender(ctrl)
 
