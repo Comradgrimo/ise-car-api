@@ -1,11 +1,11 @@
 package producer
 
 import (
+	"github.com/ozonmp/ise-car-api/internal/app/repo"
 	"log"
 	"sync"
 	"time"
 
-	"github.com/ozonmp/ise-car-api/internal/app/repo"
 	"github.com/ozonmp/ise-car-api/internal/app/sender"
 	"github.com/ozonmp/ise-car-api/internal/model"
 
@@ -63,22 +63,10 @@ func (p *producer) Start() {
 				case event := <-p.events:
 					// send event to kafka
 					if err := p.sender.Send(&event); err != nil {
-						p.workerPool.Submit(func() {
-							//in case of error - unlock db records
-							err = p.repo.Unlock([]uint64{event.ID})
-							if err != nil {
-								log.Printf("failed to unlock event ids %v", event.ID)
-							}
-						})
+						p.unlockEvent(event)
 					} else {
 						// record processed, delete it from db event records
-						// call cleaners
-						p.workerPool.Submit(func() {
-							err = p.repo.Remove([]uint64{event.ID})
-							if err != nil {
-								log.Printf("failed to remove event records from db, id=%v", event.ID)
-							}
-						})
+						p.deleteEventFromDB(event)
 					}
 				case <-p.done:
 					return
@@ -86,6 +74,29 @@ func (p *producer) Start() {
 			}
 		}()
 	}
+}
+
+func (p *producer) deleteEventFromDB(event model.CarEvent) {
+	p.wg.Add(1)
+	p.workerPool.Submit(func() {
+		defer p.wg.Done()
+		err := p.repo.Remove([]uint64{event.ID})
+		if err != nil {
+			log.Printf("failed to remove event records from db, id=%v", event.ID)
+		}
+	})
+}
+
+func (p *producer) unlockEvent(event model.CarEvent) {
+	p.wg.Add(1)
+	p.workerPool.Submit(func() {
+		defer p.wg.Done()
+		//in case of error - unlock db records
+		err := p.repo.Unlock([]uint64{event.ID})
+		if err != nil {
+			log.Printf("failed to unlock event ids %v", event.ID)
+		}
+	})
 }
 
 func (p *producer) Close() {
