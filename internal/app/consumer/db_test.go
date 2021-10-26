@@ -1,11 +1,13 @@
 package consumer
 
 import (
-	"github.com/golang/mock/gomock"
-	"github.com/ozonmp/ise-car-api/internal/mocks"
-	"github.com/ozonmp/ise-car-api/internal/model"
 	"testing"
 	"time"
+
+	"github.com/golang/mock/gomock"
+
+	"github.com/ozonmp/ise-car-api/internal/mocks"
+	"github.com/ozonmp/ise-car-api/internal/model"
 )
 
 func TestStart(t *testing.T) {
@@ -25,8 +27,8 @@ func TestStart(t *testing.T) {
 	}
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
-	rep := mocks.NewMockEventRepo(ctrl)
-	rep.EXPECT().Lock(uint64(len(events))).Return(events, nil).Times(1)
+	repo := mocks.NewMockEventRepo(ctrl)
+	repo.EXPECT().Lock(uint64(len(events))).Return(events, nil).Times(1)
 
 	eventChan := make(chan model.CarEvent)
 
@@ -34,25 +36,25 @@ func TestStart(t *testing.T) {
 		1,
 		uint64(len(events)),
 		2*time.Second,
-		rep,
+		repo,
 		eventChan,
-		)
+	)
 	cons.Start()
 
 	idx := 0
-	timeout := time.After(1*time.Second)
-	loop:
-		for {
-			select {
-			case event := <-eventChan:
-				//fmt.Println(event)
-				if event != events[idx] {
-					t.FailNow()
-				}
-				idx++
-			case <-timeout:
-				cons.Close()
-				break loop
+	timeout := time.After(1 * time.Second)
+loop:
+	for {
+		select {
+		case event := <-eventChan:
+			//fmt.Println(event)
+			if event != events[idx] {
+				t.FailNow()
 			}
+			idx++
+		case <-timeout:
+			cons.Close()
+			break loop
 		}
+	}
 }
