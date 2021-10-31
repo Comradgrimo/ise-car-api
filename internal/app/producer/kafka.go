@@ -23,12 +23,11 @@ type producer struct {
 
 	sender sender.EventSender
 	events <-chan model.CarEvent
-	repo      repo.EventRepo
+	repo   repo.EventRepo
 
 	workerPool *workerpool.WorkerPool
 
-	wg   *sync.WaitGroup
-	done chan bool
+	wg *sync.WaitGroup
 }
 
 func NewKafkaProducer(
@@ -40,7 +39,6 @@ func NewKafkaProducer(
 ) Producer {
 
 	wg := &sync.WaitGroup{}
-	done := make(chan bool)
 
 	return &producer{
 		n:          n,
@@ -49,7 +47,6 @@ func NewKafkaProducer(
 		repo:       repo,
 		workerPool: workerPool,
 		wg:         wg,
-		done:       done,
 	}
 }
 
@@ -60,7 +57,10 @@ func (p *producer) Start() {
 			defer p.wg.Done()
 			for {
 				select {
-				case event := <-p.events:
+				case event, ok := <-p.events:
+					if !ok {
+						return
+					}
 					// send event to kafka
 					if err := p.sender.Send(&event); err != nil {
 						p.unlockEvent(event)
@@ -68,8 +68,6 @@ func (p *producer) Start() {
 						// record processed, delete it from db event records
 						p.deleteEventFromDB(event)
 					}
-				case <-p.done:
-					return
 				}
 			}
 		}()
@@ -100,6 +98,5 @@ func (p *producer) unlockEvent(event model.CarEvent) {
 }
 
 func (p *producer) Close() {
-	close(p.done)
 	p.wg.Wait()
 }

@@ -1,7 +1,7 @@
 package model
 
 type Car struct {
-	ID uint64
+	ID    uint64
 	Title string
 }
 
@@ -13,7 +13,8 @@ const (
 	Created EventType = iota
 	Updated
 	Removed
-
+)
+const (
 	Available EventStatus = iota
 	InProcess
 )

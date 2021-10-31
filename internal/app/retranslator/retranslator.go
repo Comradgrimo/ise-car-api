@@ -21,7 +21,7 @@ type Config struct {
 	ChannelSize uint64
 
 	ConsumerCount  uint64
-	ConsumeSize    uint64    // batch size
+	ConsumeSize    uint64 // batch size
 	ConsumeTimeout time.Duration
 
 	ProducerCount uint64
