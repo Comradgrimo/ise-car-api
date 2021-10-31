@@ -60,9 +60,9 @@ loop:
 	for _, event := range events {
 		select {
 		case eventChan <- event:
-			break
 		case <-timeout:
 			break loop
 		}
 	}
+	close(eventChan)
 }

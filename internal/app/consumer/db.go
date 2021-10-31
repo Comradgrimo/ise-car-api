@@ -1,6 +1,7 @@
 package consumer
 
 import (
+	"math/rand"
 	"sync"
 	"time"
 
@@ -55,6 +56,12 @@ func NewDbConsumer(
 	}
 }
 
+func timeoutWithJitter(timeout time.Duration, deviation float64) time.Duration {
+	absoluteDeviation := int64(float64(timeout.Nanoseconds()) * deviation)
+	jitter := rand.Int63n(absoluteDeviation) - absoluteDeviation/2
+	return time.Duration(timeout.Nanoseconds()+jitter) * time.Nanosecond
+}
+
 func (c *consumer) Start() {
 	for i := uint64(0); i < c.n; i++ {
 		c.wg.Add(1)
@@ -62,7 +69,7 @@ func (c *consumer) Start() {
 		go func() {
 			defer c.wg.Done()
 
-			ticker := time.NewTicker(c.timeout)
+			ticker := time.NewTicker(timeoutWithJitter(c.timeout, 0.1))
 			for {
 				// return with block. gets from db events and in the same time locks them in db
 				events, err := c.repo.Lock(c.batchSize)
@@ -76,7 +83,6 @@ func (c *consumer) Start() {
 				}
 				select {
 				case <-ticker.C:
-					break
 				case <-c.done:
 					return
 				}
@@ -88,4 +94,5 @@ func (c *consumer) Start() {
 func (c *consumer) Close() {
 	close(c.done)
 	c.wg.Wait()
+	close(c.events)
 }
