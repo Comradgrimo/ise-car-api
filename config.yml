@@ -1,5 +1,5 @@
 project:
-  name: Ozon Code Platform Template API
+  name: Ozon Code Platform Car API
   debug: true
   environment: development
 
@@ -20,7 +20,7 @@ metrics:
   path: /metrics
 
 jaeger:
-  service: "omp-template-api"
+  service: "ise-car-api"
   host: "jaeger"
   port: ":6831"
 
@@ -43,8 +43,8 @@ database:
 
 kafka:
   capacity: 512
-  topic: "omp-template-events"
-  groupId: "omp-template-api"
+  topic: "ise-car-events"
+  groupId: "ise-car-api"
   brokers:
     - "kafka:9092"
     - "localhost:9094"

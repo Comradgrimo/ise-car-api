@@ -1,9 +1,9 @@
 package model
 
-type Car struct {
-	ID    uint64
-	Title string
-}
+//type Car struct {
+//	ID    uint64
+//	Title string
+//}
 
 type EventType uint8
 

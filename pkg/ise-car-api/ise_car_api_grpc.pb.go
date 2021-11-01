@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OmpTemplateApiServiceClient interface {
-	// DescribeTemplateV1 - Describe a template
+	// DescribeTemplateV1 - Describe a car
 	DescribeTemplateV1(ctx context.Context, in *DescribeTemplateV1Request, opts ...grpc.CallOption) (*DescribeTemplateV1Response, error)
 }
 
@@ -43,7 +43,7 @@ func (c *ompTemplateApiServiceClient) DescribeTemplateV1(ctx context.Context, in
 // All implementations must embed UnimplementedOmpTemplateApiServiceServer
 // for forward compatibility
 type OmpTemplateApiServiceServer interface {
-	// DescribeTemplateV1 - Describe a template
+	// DescribeTemplateV1 - Describe a car
 	DescribeTemplateV1(context.Context, *DescribeTemplateV1Request) (*DescribeTemplateV1Response, error)
 	mustEmbedUnimplementedOmpTemplateApiServiceServer()
 }
@@ -99,5 +99,5 @@ var OmpTemplateApiService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "ozonmp/omp_template_api/v1/omp_template_api.proto",
+	Metadata: "ozonmp/ise_car_api/v1/ise_car_api.proto",
 }

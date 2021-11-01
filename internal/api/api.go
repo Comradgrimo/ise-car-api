@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/ozonmp/omp-template-api/internal/repo"
+	"github.com/ozonmp/ise-car-api/internal/repo"
 
-	pb "github.com/ozonmp/omp-template-api/pkg/omp-template-api"
+	pb "github.com/ozonmp/ise-car-api/pkg/ise-car-api"
 )
 
 var (
@@ -27,7 +27,7 @@ type templateAPI struct {
 	repo repo.Repo
 }
 
-// NewTemplateAPI returns api of omp-template-api service
+// NewTemplateAPI returns api of ise-car-api service
 func NewTemplateAPI(r repo.Repo) pb.OmpTemplateApiServiceServer {
 	return &templateAPI{repo: r}
 }
@@ -43,26 +43,26 @@ func (o *templateAPI) DescribeTemplateV1(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	template, err := o.repo.DescribeTemplate(ctx, req.TemplateId)
+	car, err := o.repo.DescribeTemplate(ctx, req.TemplateId)
 	if err != nil {
 		log.Error().Err(err).Msg("DescribeTemplateV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	if template == nil {
-		log.Debug().Uint64("templateId", req.TemplateId).Msg("template not found")
+	if car == nil {
+		log.Debug().Uint64("templateId", req.TemplateId).Msg("car not found")
 		totalTemplateNotFound.Inc()
 
-		return nil, status.Error(codes.NotFound, "template not found")
+		return nil, status.Error(codes.NotFound, "car not found")
 	}
 
 	log.Debug().Msg("DescribeTemplateV1 - success")
 
 	return &pb.DescribeTemplateV1Response{
-		Value: &pb.Template{
-			Id:  template.ID,
-			Foo: template.Foo,
+		Value: &pb.Car{
+			Id:  car.ID,
+			//Foo: car.Foo,
 		},
 	}, nil
 }

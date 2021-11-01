@@ -14,7 +14,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 
-	pb "github.com/ozonmp/omp-template-api/pkg/omp-template-api"
+	pb "github.com/ozonmp/ise-car-api/pkg/ise-car-api"
 )
 
 var (

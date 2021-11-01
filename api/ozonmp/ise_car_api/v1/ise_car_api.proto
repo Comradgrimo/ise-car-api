@@ -6,11 +6,11 @@ import "validate/validate.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/ozonmp/omp-template-api/pkg/omp-template-api;omp_template_api";
+option go_package = "github.com/ozonmp/ise-car-api/pkg/ise-car-api;omp_template_api";
 
 // OmpTemplateApiService - Service for working with templates
 service OmpTemplateApiService {
-  // DescribeTemplateV1 - Describe a template
+  // DescribeTemplateV1 - Describe a car
   rpc DescribeTemplateV1(DescribeTemplateV1Request) returns (DescribeTemplateV1Response) {
     option (google.api.http) = {
       get: "/v1/templates/{template_id}"
@@ -18,7 +18,7 @@ service OmpTemplateApiService {
   }
 }
 
-message Template {
+message Car {
   uint64 id  = 1;
   uint64 foo = 2;
   google.protobuf.Timestamp created = 3;
@@ -29,5 +29,5 @@ message DescribeTemplateV1Request {
 }
 
 message DescribeTemplateV1Response {
-  Template value = 1;
+  Car value = 1;
 }
