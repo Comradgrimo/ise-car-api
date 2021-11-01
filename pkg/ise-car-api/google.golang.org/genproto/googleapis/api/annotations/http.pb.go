@@ -118,10 +118,10 @@ func (x *Http) GetFullyDecodeReservedExpansion() bool {
 // gRPC response message is mapped to the HTTP response body. `HttpRule` is
 // typically specified as an `google.api.http` annotation on the gRPC method.
 //
-// Each mapping specifies a URL path car and an HTTP method. The path
-// car may refer to one or more fields in the gRPC request message, as long
+// Each mapping specifies a URL path template and an HTTP method. The path
+// template may refer to one or more fields in the gRPC request message, as long
 // as each field is a non-repeated field with a primitive (non-message) type.
-// The path car controls how fields of the request message are mapped to
+// The path template controls how fields of the request message are mapped to
 // the URL path.
 //
 // Example:
@@ -146,7 +146,7 @@ func (x *Http) GetFullyDecodeReservedExpansion() bool {
 // -----|-----
 // `GET /v1/messages/123456`  | `GetMessage(name: "messages/123456")`
 //
-// Any fields in the request message which are not bound by the path car
+// Any fields in the request message which are not bound by the path template
 // automatically become HTTP query parameters if there is no HTTP request body.
 // For example:
 //
@@ -208,7 +208,7 @@ func (x *Http) GetFullyDecodeReservedExpansion() bool {
 // "123456" message { text: "Hi!" })`
 //
 // The special name `*` can be used in the body mapping to define that
-// every field not bound by the path car should be mapped to the
+// every field not bound by the path template should be mapped to the
 // request body.  This enables the following alternative definition of
 // the update method:
 //
@@ -269,7 +269,7 @@ func (x *Http) GetFullyDecodeReservedExpansion() bool {
 //
 // 1. Leaf request fields (recursive expansion nested messages in the request
 //    message) are classified into three categories:
-//    - Fields referred by the path car. They are passed via the URL path.
+//    - Fields referred by the path template. They are passed via the URL path.
 //    - Fields referred by the [HttpRule.body][google.api.HttpRule.body]. They are passed via the HTTP
 //      request body.
 //    - All other fields are passed via the URL query parameters, and the
@@ -281,7 +281,7 @@ func (x *Http) GetFullyDecodeReservedExpansion() bool {
 //  3. If [HttpRule.body][google.api.HttpRule.body] is omitted, there is no HTTP request body, all
 //     fields are passed via URL path and URL query parameters.
 //
-// ### Path car syntax
+// ### Path template syntax
 //
 //     Car = "/" Segments [ Verb ] ;
 //     Segments = Segment { "/" Segment } ;
@@ -295,8 +295,8 @@ func (x *Http) GetFullyDecodeReservedExpansion() bool {
 // except the `Verb`.
 //
 // The syntax `Variable` matches part of the URL path as specified by its
-// car. A variable car must not contain other variables. If a variable
-// matches a single path segment, its car may be omitted, e.g. `{var}`
+// template. A variable template must not contain other variables. If a variable
+// matches a single path segment, its template may be omitted, e.g. `{var}`
 // is equivalent to `{var=*}`.
 //
 // The syntax `LITERAL` matches literal text in the URL path. If the `LITERAL`

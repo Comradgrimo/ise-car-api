@@ -10,7 +10,7 @@ import (
 
 // Repo is DAO for Car
 type Repo interface {
-	DescribeTemplate(ctx context.Context, templateID uint64) (*model.Car, error)
+	DescribeCar(ctx context.Context, carID uint64) (*model.Car, error)
 }
 
 type repo struct {
@@ -23,6 +23,6 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 	return &repo{db: db, batchSize: batchSize}
 }
 
-func (r *repo) DescribeTemplate(ctx context.Context, templateID uint64) (*model.Car, error) {
+func (r *repo) DescribeCar(ctx context.Context, carID uint64) (*model.Car, error) {
 	return nil, nil
 }

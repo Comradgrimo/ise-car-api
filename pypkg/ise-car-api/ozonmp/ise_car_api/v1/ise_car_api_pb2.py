@@ -19,10 +19,10 @@ from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='ozonmp/ise_car_api/v1/ise_car_api.proto',
-  package='ozonmp.omp_template_api.v1',
+  package='ozonmp.ise_car_api.v1',
   syntax='proto3',
-  serialized_options=_b('Z>github.com/ozonmp/ise-car-api/pkg/ise-car-api;omp_template_api'),
-  serialized_pb=_b('\n\'ozonmp/ise_car_api/v1/ise_car_api.proto\x12\x1aozonmp.omp_template_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"]\n\x03\x43\x61r\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x10\n\x03\x66oo\x18\x02 \x01(\x04R\x03\x66oo\x12\x34\n\x07\x63reated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07\x63reated\"E\n\x19\x44\x65scribeTemplateV1Request\x12(\n\x0btemplate_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\ntemplateId\"S\n\x1a\x44\x65scribeTemplateV1Response\x12\x35\n\x05value\x18\x01 \x01(\x0b\x32\x1f.ozonmp.omp_template_api.v1.CarR\x05value2\xc2\x01\n\x15OmpTemplateApiService\x12\xa8\x01\n\x12\x44\x65scribeTemplateV1\x12\x35.ozonmp.omp_template_api.v1.DescribeTemplateV1Request\x1a\x36.ozonmp.omp_template_api.v1.DescribeTemplateV1Response\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/templates/{template_id}B@Z>github.com/ozonmp/ise-car-api/pkg/ise-car-api;omp_template_apib\x06proto3')
+  serialized_options=_b('Z9github.com/ozonmp/ise-car-api/pkg/ise-car-api;ise_car_api'),
+  serialized_pb=_b('\n\'ozonmp/ise_car_api/v1/ise_car_api.proto\x12\x15ozonmp.ise_car_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"]\n\x03\x43\x61r\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x10\n\x03\x66oo\x18\x02 \x01(\x04R\x03\x66oo\x12\x34\n\x07\x63reated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07\x63reated\"6\n\x14\x44\x65scribeCarV1Request\x12\x1e\n\x06\x63\x61r_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x05\x63\x61rId\"I\n\x15\x44\x65scribeCarV1Response\x12\x30\n\x05value\x18\x01 \x01(\x0b\x32\x1a.ozonmp.ise_car_api.v1.CarR\x05value2\x9a\x01\n\x10IseCarApiService\x12\x85\x01\n\rDescribeCarV1\x12+.ozonmp.ise_car_api.v1.DescribeCarV1Request\x1a,.ozonmp.ise_car_api.v1.DescribeCarV1Response\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/cars/{car_id}B;Z9github.com/ozonmp/ise-car-api/pkg/ise-car-api;ise_car_apib\x06proto3')
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -31,27 +31,27 @@ DESCRIPTOR = _descriptor.FileDescriptor(
 
 _CAR = _descriptor.Descriptor(
   name='Car',
-  full_name='ozonmp.omp_template_api.v1.Car',
+  full_name='ozonmp.ise_car_api.v1.Car',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='ozonmp.omp_template_api.v1.Car.id', index=0,
+      name='id', full_name='ozonmp.ise_car_api.v1.Car.id', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, json_name='id', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='foo', full_name='ozonmp.omp_template_api.v1.Car.foo', index=1,
+      name='foo', full_name='ozonmp.ise_car_api.v1.Car.foo', index=1,
       number=2, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, json_name='foo', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='created', full_name='ozonmp.omp_template_api.v1.Car.created', index=2,
+      name='created', full_name='ozonmp.ise_car_api.v1.Car.created', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -69,25 +69,25 @@ _CAR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=159,
-  serialized_end=252,
+  serialized_start=154,
+  serialized_end=247,
 )
 
 
-_DESCRIBETEMPLATEV1REQUEST = _descriptor.Descriptor(
-  name='DescribeTemplateV1Request',
-  full_name='ozonmp.omp_template_api.v1.DescribeTemplateV1Request',
+_DESCRIBECARV1REQUEST = _descriptor.Descriptor(
+  name='DescribeCarV1Request',
+  full_name='ozonmp.ise_car_api.v1.DescribeCarV1Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='template_id', full_name='ozonmp.omp_template_api.v1.DescribeTemplateV1Request.template_id', index=0,
+      name='car_id', full_name='ozonmp.ise_car_api.v1.DescribeCarV1Request.car_id', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=_b('\372B\0042\002 \000'), json_name='templateId', file=DESCRIPTOR),
+      serialized_options=_b('\372B\0042\002 \000'), json_name='carId', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -100,20 +100,20 @@ _DESCRIBETEMPLATEV1REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=254,
-  serialized_end=323,
+  serialized_start=249,
+  serialized_end=303,
 )
 
 
-_DESCRIBETEMPLATEV1RESPONSE = _descriptor.Descriptor(
-  name='DescribeTemplateV1Response',
-  full_name='ozonmp.omp_template_api.v1.DescribeTemplateV1Response',
+_DESCRIBECARV1RESPONSE = _descriptor.Descriptor(
+  name='DescribeCarV1Response',
+  full_name='ozonmp.ise_car_api.v1.DescribeCarV1Response',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='ozonmp.omp_template_api.v1.DescribeTemplateV1Response.value', index=0,
+      name='value', full_name='ozonmp.ise_car_api.v1.DescribeCarV1Response.value', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -131,63 +131,63 @@ _DESCRIBETEMPLATEV1RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=325,
-  serialized_end=408,
+  serialized_start=305,
+  serialized_end=378,
 )
 
 _CAR.fields_by_name['created'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
-_DESCRIBETEMPLATEV1RESPONSE.fields_by_name['value'].message_type = _CAR
+_DESCRIBECARV1RESPONSE.fields_by_name['value'].message_type = _CAR
 DESCRIPTOR.message_types_by_name['Car'] = _CAR
-DESCRIPTOR.message_types_by_name['DescribeTemplateV1Request'] = _DESCRIBETEMPLATEV1REQUEST
-DESCRIPTOR.message_types_by_name['DescribeTemplateV1Response'] = _DESCRIBETEMPLATEV1RESPONSE
+DESCRIPTOR.message_types_by_name['DescribeCarV1Request'] = _DESCRIBECARV1REQUEST
+DESCRIPTOR.message_types_by_name['DescribeCarV1Response'] = _DESCRIBECARV1RESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Car = _reflection.GeneratedProtocolMessageType('Car', (_message.Message,), dict(
   DESCRIPTOR = _CAR,
   __module__ = 'ozonmp.ise_car_api.v1.ise_car_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.omp_template_api.v1.Car)
+  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.Car)
   ))
 _sym_db.RegisterMessage(Car)
 
-DescribeTemplateV1Request = _reflection.GeneratedProtocolMessageType('DescribeTemplateV1Request', (_message.Message,), dict(
-  DESCRIPTOR = _DESCRIBETEMPLATEV1REQUEST,
+DescribeCarV1Request = _reflection.GeneratedProtocolMessageType('DescribeCarV1Request', (_message.Message,), dict(
+  DESCRIPTOR = _DESCRIBECARV1REQUEST,
   __module__ = 'ozonmp.ise_car_api.v1.ise_car_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.omp_template_api.v1.DescribeTemplateV1Request)
+  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.DescribeCarV1Request)
   ))
-_sym_db.RegisterMessage(DescribeTemplateV1Request)
+_sym_db.RegisterMessage(DescribeCarV1Request)
 
-DescribeTemplateV1Response = _reflection.GeneratedProtocolMessageType('DescribeTemplateV1Response', (_message.Message,), dict(
-  DESCRIPTOR = _DESCRIBETEMPLATEV1RESPONSE,
+DescribeCarV1Response = _reflection.GeneratedProtocolMessageType('DescribeCarV1Response', (_message.Message,), dict(
+  DESCRIPTOR = _DESCRIBECARV1RESPONSE,
   __module__ = 'ozonmp.ise_car_api.v1.ise_car_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.omp_template_api.v1.DescribeTemplateV1Response)
+  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.DescribeCarV1Response)
   ))
-_sym_db.RegisterMessage(DescribeTemplateV1Response)
+_sym_db.RegisterMessage(DescribeCarV1Response)
 
 
 DESCRIPTOR._options = None
-_DESCRIBETEMPLATEV1REQUEST.fields_by_name['template_id']._options = None
+_DESCRIBECARV1REQUEST.fields_by_name['car_id']._options = None
 
-_OMPTEMPLATEAPISERVICE = _descriptor.ServiceDescriptor(
-  name='OmpTemplateApiService',
-  full_name='ozonmp.omp_template_api.v1.OmpTemplateApiService',
+_ISECARAPISERVICE = _descriptor.ServiceDescriptor(
+  name='IseCarApiService',
+  full_name='ozonmp.ise_car_api.v1.IseCarApiService',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=411,
-  serialized_end=605,
+  serialized_start=381,
+  serialized_end=535,
   methods=[
   _descriptor.MethodDescriptor(
-    name='DescribeTemplateV1',
-    full_name='ozonmp.omp_template_api.v1.OmpTemplateApiService.DescribeTemplateV1',
+    name='DescribeCarV1',
+    full_name='ozonmp.ise_car_api.v1.IseCarApiService.DescribeCarV1',
     index=0,
     containing_service=None,
-    input_type=_DESCRIBETEMPLATEV1REQUEST,
-    output_type=_DESCRIBETEMPLATEV1RESPONSE,
-    serialized_options=_b('\202\323\344\223\002\035\022\033/v1/templates/{template_id}'),
+    input_type=_DESCRIBECARV1REQUEST,
+    output_type=_DESCRIBECARV1RESPONSE,
+    serialized_options=_b('\202\323\344\223\002\023\022\021/v1/cars/{car_id}'),
   ),
 ])
-_sym_db.RegisterServiceDescriptor(_OMPTEMPLATEAPISERVICE)
+_sym_db.RegisterServiceDescriptor(_ISECARAPISERVICE)
 
-DESCRIPTOR.services_by_name['OmpTemplateApiService'] = _OMPTEMPLATEAPISERVICE
+DESCRIPTOR.services_by_name['IseCarApiService'] = _ISECARAPISERVICE
 
 # @@protoc_insertion_point(module_scope)

@@ -1,19 +1,19 @@
 syntax = "proto3";
 
-package ozonmp.omp_template_api.v1;
+package ozonmp.ise_car_api.v1;
 
 import "validate/validate.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/ozonmp/ise-car-api/pkg/ise-car-api;omp_template_api";
+option go_package = "github.com/ozonmp/ise-car-api/pkg/ise-car-api;ise_car_api";
 
-// OmpTemplateApiService - Service for working with templates
-service OmpTemplateApiService {
-  // DescribeTemplateV1 - Describe a car
-  rpc DescribeTemplateV1(DescribeTemplateV1Request) returns (DescribeTemplateV1Response) {
+// IseCarApiService - Service for working with cars
+service IseCarApiService {
+  // DescribeCarV1 - Describe a car
+  rpc DescribeCarV1(DescribeCarV1Request) returns (DescribeCarV1Response) {
     option (google.api.http) = {
-      get: "/v1/templates/{template_id}"
+      get: "/v1/cars/{car_id}"
     };
   }
 }
@@ -24,10 +24,10 @@ message Car {
   google.protobuf.Timestamp created = 3;
 }
 
-message DescribeTemplateV1Request {
-  uint64 template_id = 1 [(validate.rules).uint64.gt = 0];
+message DescribeCarV1Request {
+  uint64 car_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
-message DescribeTemplateV1Response {
+message DescribeCarV1Response {
   Car value = 1;
 }

@@ -15,29 +15,29 @@ import google.protobuf.timestamp_pb2
 import ozonmp.ise_car_api.v1.ise_car_api_pb2
 
 
-class OmpTemplateApiServiceBase(abc.ABC):
+class IseCarApiServiceBase(abc.ABC):
 
     @abc.abstractmethod
-    async def DescribeTemplateV1(self, stream: 'grpclib.server.Stream[ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeTemplateV1Request, ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeTemplateV1Response]') -> None:
+    async def DescribeCarV1(self, stream: 'grpclib.server.Stream[ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Request, ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Response]') -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/ozonmp.omp_template_api.v1.OmpTemplateApiService/DescribeTemplateV1': grpclib.const.Handler(
-                self.DescribeTemplateV1,
+            '/ozonmp.ise_car_api.v1.IseCarApiService/DescribeCarV1': grpclib.const.Handler(
+                self.DescribeCarV1,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeTemplateV1Request,
-                ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeTemplateV1Response,
+                ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Request,
+                ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Response,
             ),
         }
 
 
-class OmpTemplateApiServiceStub:
+class IseCarApiServiceStub:
 
     def __init__(self, channel: grpclib.client.Channel) -> None:
-        self.DescribeTemplateV1 = grpclib.client.UnaryUnaryMethod(
+        self.DescribeCarV1 = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/ozonmp.omp_template_api.v1.OmpTemplateApiService/DescribeTemplateV1',
-            ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeTemplateV1Request,
-            ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeTemplateV1Response,
+            '/ozonmp.ise_car_api.v1.IseCarApiService/DescribeCarV1',
+            ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Request,
+            ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Response,
         )

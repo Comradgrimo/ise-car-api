@@ -16,50 +16,50 @@ import (
 )
 
 var (
-	totalTemplateNotFound = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "omp_template_api_template_not_found_total",
-		Help: "Total number of templates that were not found",
+	totalCarNotFound = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "ise_car_api_car_not_found_total",
+		Help: "Total number of cars that were not found",
 	})
 )
 
-type templateAPI struct {
-	pb.UnimplementedOmpTemplateApiServiceServer
+type carAPI struct {
+	pb.UnimplementedIseCarApiServiceServer
 	repo repo.Repo
 }
 
-// NewTemplateAPI returns api of ise-car-api service
-func NewTemplateAPI(r repo.Repo) pb.OmpTemplateApiServiceServer {
-	return &templateAPI{repo: r}
+// NewCarAPI returns api of ise-car-api service
+func NewCarAPI(r repo.Repo) pb.IseCarApiServiceServer {
+	return &carAPI{repo: r}
 }
 
-func (o *templateAPI) DescribeTemplateV1(
+func (o *carAPI) DescribeCarV1(
 	ctx context.Context,
-	req *pb.DescribeTemplateV1Request,
-) (*pb.DescribeTemplateV1Response, error) {
+	req *pb.DescribeCarV1Request,
+) (*pb.DescribeCarV1Response, error) {
 
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 - invalid argument")
+		log.Error().Err(err).Msg("DescribeCarV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	car, err := o.repo.DescribeTemplate(ctx, req.TemplateId)
+	car, err := o.repo.DescribeCar(ctx, req.CarId)
 	if err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 -- failed")
+		log.Error().Err(err).Msg("DescribeCarV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	if car == nil {
-		log.Debug().Uint64("templateId", req.TemplateId).Msg("car not found")
-		totalTemplateNotFound.Inc()
+		log.Debug().Uint64("carId", req.CarId).Msg("car not found")
+		totalCarNotFound.Inc()
 
 		return nil, status.Error(codes.NotFound, "car not found")
 	}
 
-	log.Debug().Msg("DescribeTemplateV1 - success")
+	log.Debug().Msg("DescribeCarV1 - success")
 
-	return &pb.DescribeTemplateV1Response{
+	return &pb.DescribeCarV1Response{
 		Value: &pb.Car{
 			Id:  car.ID,
 			//Foo: car.Foo,
