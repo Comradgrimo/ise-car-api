@@ -15,13 +15,31 @@ service IseCarApiService {
     option (google.api.http) = {
       get: "/v1/cars/{car_id}"
     };
+  };
+  // ListCarsV1 - List existing cars
+  rpc ListCarsV1(ListCarsV1Request) returns (ListCarsV1Response) {
+    option (google.api.http) = {
+      get: "/v1/cars"
+    };
+  };
+
+  // CreateCarV1 - create new car
+  rpc CreateCarV1(CreateCarV1Request) returns (CreateCarV1Response) {
+    option (google.api.http) = {
+      post: "/v1/cars/{title}"
+    };
+  };
+  // RemoveCarV1 - remove car by id
+  rpc RemoveCarV1(RemoveCarV1Request) returns (RemoveCarV1Response) {
+    option (google.api.http) = {
+      delete: "/v1/cars/{car_id}"
+    };
   }
 }
 
 message Car {
   uint64 id  = 1;
-  uint64 foo = 2;
-  google.protobuf.Timestamp created = 3;
+  string title = 2;
 }
 
 message DescribeCarV1Request {
@@ -30,4 +48,26 @@ message DescribeCarV1Request {
 
 message DescribeCarV1Response {
   Car value = 1;
+}
+message CreateCarV1Request {
+  string title = 1 [(validate.rules).string.min_len = 1];
+}
+
+message CreateCarV1Response {
+  uint64 car_id = 1;
+}
+
+message ListCarsV1Request {
+}
+
+message ListCarsV1Response {
+  repeated Car items = 1;
+}
+
+message RemoveCarV1Request {
+  uint64 car_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message RemoveCarV1Response {
+  bool found = 1;
 }

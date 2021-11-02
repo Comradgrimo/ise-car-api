@@ -1,9 +1,10 @@
 package model
 
-//type Car struct {
-//	ID    uint64
-//	Title string
-//}
+// Car - car entity.
+type Car struct {
+	ID    uint64 `db:"id"`
+	Title string `db:"title"`
+}
 
 type EventType uint8
 

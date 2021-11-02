@@ -2,7 +2,7 @@ package api
 
 import (
 	"context"
-
+	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 
@@ -61,8 +61,23 @@ func (o *carAPI) DescribeCarV1(
 
 	return &pb.DescribeCarV1Response{
 		Value: &pb.Car{
-			Id:  car.ID,
-			//Foo: car.Foo,
+			Id:    car.ID,
+			Title: car.Title,
 		},
 	}, nil
+}
+
+func (o *carAPI) ListCarsV1(ctx context.Context, in *pb.ListCarsV1Request) (*pb.ListCarsV1Response, error) {
+	log.Debug().Msg("ListCarsV1 called")
+	return new(pb.ListCarsV1Response), nil
+}
+
+func (o *carAPI) CreateCarV1(ctx context.Context, in *pb.CreateCarV1Request) (*pb.CreateCarV1Response, error) {
+	log.Debug().Msg(fmt.Sprintf("CreateCarV1 called: title=%v", in.Title))
+	return new(pb.CreateCarV1Response), nil
+}
+
+func (o *carAPI) RemoveCarV1(ctx context.Context, in *pb.RemoveCarV1Request) (*pb.RemoveCarV1Response, error) {
+	log.Debug().Msg(fmt.Sprintf("RemoveCarV1 called for %v", in.CarId))
+	return new(pb.RemoveCarV1Response), nil
 }
