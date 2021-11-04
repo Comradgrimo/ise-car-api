@@ -4,7 +4,6 @@ package ozonmp.ise_car_api.v1;
 
 import "validate/validate.proto";
 import "google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/ozonmp/ise-car-api/pkg/ise-car-api;ise_car_api";
 

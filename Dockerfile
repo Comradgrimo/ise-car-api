@@ -2,7 +2,7 @@
 
 ARG GITHUB_PATH=github.com/ozonmp/ise-car-api
 
-FROM golang:1.16-alpine AS builder
+FROM golang:1.17-alpine AS builder
 RUN apk add --update make git protoc protobuf protobuf-dev curl
 COPY . /home/${GITHUB_PATH}
 WORKDIR /home/${GITHUB_PATH}

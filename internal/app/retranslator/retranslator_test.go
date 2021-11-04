@@ -1,6 +1,7 @@
 package retranslator
 
 import (
+	"context"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -63,7 +64,10 @@ func TestStart(t *testing.T) {
 	}).AnyTimes()
 	retranslator := NewRetranslator(cfg)
 
-	retranslator.Start()
+	ctx, cancel := context.WithTimeout(context.Background(), cfg.ConsumeTimeout)
+	defer cancel()
+
+	retranslator.Start(ctx)
 	retranslator.Close()
 
 	if !(locksCnt == sendCnt && sendCnt == removesCnt) {

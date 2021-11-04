@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"os"
 	"os/signal"
 	"syscall"
@@ -22,8 +23,11 @@ func main() {
 		WorkerCount:    2,
 	}
 
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
 	r := retranslator.NewRetranslator(cfg)
-	r.Start()
+	r.Start(ctx)
 
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 

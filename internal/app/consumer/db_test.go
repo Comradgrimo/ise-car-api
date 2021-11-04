@@ -1,6 +1,7 @@
 package consumer
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -32,14 +33,18 @@ func TestStart(t *testing.T) {
 
 	eventChan := make(chan model.CarEvent)
 
+	consTimeout := 2*time.Second
 	cons := NewDbConsumer(
 		1,
 		uint64(len(events)),
-		2*time.Second,
+		consTimeout,
 		repo,
 		eventChan,
 	)
-	cons.Start()
+	ctx, cancel := context.WithTimeout(context.Background(), consTimeout)
+	defer cancel()
+
+	cons.Start(ctx)
 
 	idx := 0
 	timeout := time.After(1 * time.Second)
@@ -47,7 +52,6 @@ loop:
 	for {
 		select {
 		case event := <-eventChan:
-			//fmt.Println(event)
 			if event != events[idx] {
 				t.FailNow()
 			}

@@ -2,12 +2,10 @@ package producer
 
 import (
 	"github.com/ozonmp/ise-car-api/internal/app/repo"
-	"log"
-	"sync"
-	"time"
-
 	"github.com/ozonmp/ise-car-api/internal/app/sender"
 	"github.com/ozonmp/ise-car-api/internal/model"
+	"log"
+	"sync"
 
 	"github.com/gammazero/workerpool"
 )
@@ -19,7 +17,6 @@ type Producer interface {
 
 type producer struct {
 	n       uint64
-	timeout time.Duration
 
 	sender sender.EventSender
 	events <-chan model.CarEvent
