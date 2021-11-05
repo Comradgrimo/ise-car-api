@@ -27,14 +27,7 @@ type consumer struct {
 	wg   *sync.WaitGroup
 }
 
-type Config struct {
-	n         uint64
-	events    chan<- model.CarEvent
-	repo      repo.EventRepo
-	batchSize uint64
-	timeout   time.Duration
-}
-
+// NewDbConsumer contains all consumer data
 func NewDbConsumer(
 	n uint64,
 	batchSize uint64,

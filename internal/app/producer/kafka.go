@@ -10,6 +10,7 @@ import (
 	"github.com/gammazero/workerpool"
 )
 
+// Producer - interface for producer
 type Producer interface {
 	Start()
 	Close()
@@ -27,6 +28,7 @@ type producer struct {
 	wg *sync.WaitGroup
 }
 
+// NewKafkaProducer creates the producer
 func NewKafkaProducer(
 	n uint64,
 	sender sender.EventSender,
