@@ -5,6 +5,7 @@ type Car struct {
 	ID    uint64 `db:"id"`
 	Title string `db:"title"`
 }
+type Cars []*Car
 
 type EventType uint8
 

@@ -260,10 +260,10 @@ func (m *CreateCarV1Request) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetTitle()) < 1 {
+	if l := utf8.RuneCountInString(m.GetTitle()); l < 1 || l > 100 {
 		return CreateCarV1RequestValidationError{
 			field:  "Title",
-			reason: "value length must be at least 1 runes",
+			reason: "value length must be between 1 and 100 runes, inclusive",
 		}
 	}
 

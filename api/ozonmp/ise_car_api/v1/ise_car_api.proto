@@ -49,7 +49,7 @@ message DescribeCarV1Response {
   Car value = 1;
 }
 message CreateCarV1Request {
-  string title = 1 [(validate.rules).string.min_len = 1];
+  string title = 1 [(validate.rules).string= {min_len: 1, max_len: 100}];
 }
 
 message CreateCarV1Response {
