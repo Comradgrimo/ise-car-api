@@ -42,17 +42,7 @@ func (m *Car) Validate() error {
 
 	// no validation rules for Id
 
-	// no validation rules for Foo
-
-	if v, ok := interface{}(m.GetCreated()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return CarValidationError{
-				field:  "Created",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for Title
 
 	return nil
 }
@@ -261,3 +251,438 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DescribeCarV1ResponseValidationError{}
+
+// Validate checks the field values on CreateCarV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateCarV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if l := utf8.RuneCountInString(m.GetTitle()); l < 1 || l > 100 {
+		return CreateCarV1RequestValidationError{
+			field:  "Title",
+			reason: "value length must be between 1 and 100 runes, inclusive",
+		}
+	}
+
+	return nil
+}
+
+// CreateCarV1RequestValidationError is the validation error returned by
+// CreateCarV1Request.Validate if the designated constraints aren't met.
+type CreateCarV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateCarV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateCarV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateCarV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateCarV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateCarV1RequestValidationError) ErrorName() string {
+	return "CreateCarV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateCarV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateCarV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateCarV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateCarV1RequestValidationError{}
+
+// Validate checks the field values on CreateCarV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateCarV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for CarId
+
+	return nil
+}
+
+// CreateCarV1ResponseValidationError is the validation error returned by
+// CreateCarV1Response.Validate if the designated constraints aren't met.
+type CreateCarV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateCarV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateCarV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateCarV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateCarV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateCarV1ResponseValidationError) ErrorName() string {
+	return "CreateCarV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateCarV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateCarV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateCarV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateCarV1ResponseValidationError{}
+
+// Validate checks the field values on ListCarsV1Request with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ListCarsV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// ListCarsV1RequestValidationError is the validation error returned by
+// ListCarsV1Request.Validate if the designated constraints aren't met.
+type ListCarsV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListCarsV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListCarsV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListCarsV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListCarsV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListCarsV1RequestValidationError) ErrorName() string {
+	return "ListCarsV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListCarsV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListCarsV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListCarsV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListCarsV1RequestValidationError{}
+
+// Validate checks the field values on ListCarsV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListCarsV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetItems() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListCarsV1ResponseValidationError{
+					field:  fmt.Sprintf("Items[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ListCarsV1ResponseValidationError is the validation error returned by
+// ListCarsV1Response.Validate if the designated constraints aren't met.
+type ListCarsV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListCarsV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListCarsV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListCarsV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListCarsV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListCarsV1ResponseValidationError) ErrorName() string {
+	return "ListCarsV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListCarsV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListCarsV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListCarsV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListCarsV1ResponseValidationError{}
+
+// Validate checks the field values on RemoveCarV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveCarV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if m.GetCarId() <= 0 {
+		return RemoveCarV1RequestValidationError{
+			field:  "CarId",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	return nil
+}
+
+// RemoveCarV1RequestValidationError is the validation error returned by
+// RemoveCarV1Request.Validate if the designated constraints aren't met.
+type RemoveCarV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveCarV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveCarV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveCarV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveCarV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveCarV1RequestValidationError) ErrorName() string {
+	return "RemoveCarV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveCarV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveCarV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveCarV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveCarV1RequestValidationError{}
+
+// Validate checks the field values on RemoveCarV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveCarV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Found
+
+	return nil
+}
+
+// RemoveCarV1ResponseValidationError is the validation error returned by
+// RemoveCarV1Response.Validate if the designated constraints aren't met.
+type RemoveCarV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveCarV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveCarV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveCarV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveCarV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveCarV1ResponseValidationError) ErrorName() string {
+	return "RemoveCarV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveCarV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveCarV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveCarV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveCarV1ResponseValidationError{}

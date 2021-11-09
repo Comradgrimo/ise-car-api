@@ -1,7 +1,7 @@
 -- +goose Up
 CREATE TABLE car (
   id BIGSERIAL PRIMARY KEY,
-  foo BIGINT NOT NULL
+  title TEXT NOT NULL
 );
 
 -- +goose Down

@@ -2,16 +2,15 @@ package producer
 
 import (
 	"github.com/ozonmp/ise-car-api/internal/app/repo"
-	"log"
-	"sync"
-	"time"
-
 	"github.com/ozonmp/ise-car-api/internal/app/sender"
 	"github.com/ozonmp/ise-car-api/internal/model"
+	"log"
+	"sync"
 
 	"github.com/gammazero/workerpool"
 )
 
+// Producer - interface for producer
 type Producer interface {
 	Start()
 	Close()
@@ -19,7 +18,6 @@ type Producer interface {
 
 type producer struct {
 	n       uint64
-	timeout time.Duration
 
 	sender sender.EventSender
 	events <-chan model.CarEvent
@@ -30,6 +28,7 @@ type producer struct {
 	wg *sync.WaitGroup
 }
 
+// NewKafkaProducer creates the producer
 func NewKafkaProducer(
 	n uint64,
 	sender sender.EventSender,

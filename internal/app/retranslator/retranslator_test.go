@@ -1,6 +1,7 @@
 package retranslator
 
 import (
+	"context"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -63,11 +64,14 @@ func TestStart(t *testing.T) {
 	}).AnyTimes()
 	retranslator := NewRetranslator(cfg)
 
-	retranslator.Start()
+	ctx, cancel := context.WithTimeout(context.Background(), cfg.ConsumeTimeout)
+	defer cancel()
+
+	retranslator.Start(ctx)
 	retranslator.Close()
 
 	if !(locksCnt == sendCnt && sendCnt == removesCnt) {
-		t.Errorf("Error: read from db %v messages, sent to kafka %v, removed from db %v records. " +
+		t.Errorf("Error: read from db %v messages, sent to kafka %v, removed from db %v records. "+
 			"Expect them to be equal",
 			locksCnt, sendCnt, removesCnt)
 	}

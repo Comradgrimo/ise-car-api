@@ -1,6 +1,7 @@
 package consumer
 
 import (
+	"context"
 	"math/rand"
 	"sync"
 	"time"
@@ -10,7 +11,7 @@ import (
 )
 
 type Consumer interface {
-	Start()
+	Start(ctx context.Context)
 	Close()
 }
 
@@ -23,18 +24,10 @@ type consumer struct {
 	batchSize uint64
 	timeout   time.Duration
 
-	done chan bool
 	wg   *sync.WaitGroup
 }
 
-type Config struct {
-	n         uint64
-	events    chan<- model.CarEvent
-	repo      repo.EventRepo
-	batchSize uint64
-	timeout   time.Duration
-}
-
+// NewDbConsumer contains all consumer data
 func NewDbConsumer(
 	n uint64,
 	batchSize uint64,
@@ -43,7 +36,6 @@ func NewDbConsumer(
 	events chan<- model.CarEvent) Consumer {
 
 	wg := &sync.WaitGroup{}
-	done := make(chan bool)
 
 	return &consumer{
 		n:         n,
@@ -52,7 +44,6 @@ func NewDbConsumer(
 		repo:      repo,
 		events:    events,
 		wg:        wg,
-		done:      done,
 	}
 }
 
@@ -62,7 +53,10 @@ func timeoutWithJitter(timeout time.Duration, deviation float64) time.Duration {
 	return time.Duration(timeout.Nanoseconds()+jitter) * time.Nanosecond
 }
 
-func (c *consumer) Start() {
+func (c *consumer) Start(ctx context.Context) {
+	ctxWithTimeout, cancelFunction := context.WithTimeout(ctx, c.timeout)
+	defer cancelFunction()
+
 	for i := uint64(0); i < c.n; i++ {
 		c.wg.Add(1)
 
@@ -83,7 +77,7 @@ func (c *consumer) Start() {
 				}
 				select {
 				case <-ticker.C:
-				case <-c.done:
+				case <-ctxWithTimeout.Done():
 					return
 				}
 			}
@@ -92,7 +86,6 @@ func (c *consumer) Start() {
 }
 
 func (c *consumer) Close() {
-	close(c.done)
 	c.wg.Wait()
 	close(c.events)
 }

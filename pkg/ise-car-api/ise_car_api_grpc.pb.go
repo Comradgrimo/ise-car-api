@@ -20,6 +20,12 @@ const _ = grpc.SupportPackageIsVersion7
 type IseCarApiServiceClient interface {
 	// DescribeCarV1 - Describe a car
 	DescribeCarV1(ctx context.Context, in *DescribeCarV1Request, opts ...grpc.CallOption) (*DescribeCarV1Response, error)
+	// ListCarsV1 - List existing cars
+	ListCarsV1(ctx context.Context, in *ListCarsV1Request, opts ...grpc.CallOption) (*ListCarsV1Response, error)
+	// CreateCarV1 - create new car
+	CreateCarV1(ctx context.Context, in *CreateCarV1Request, opts ...grpc.CallOption) (*CreateCarV1Response, error)
+	// RemoveCarV1 - remove car by id
+	RemoveCarV1(ctx context.Context, in *RemoveCarV1Request, opts ...grpc.CallOption) (*RemoveCarV1Response, error)
 }
 
 type iseCarApiServiceClient struct {
@@ -39,12 +45,45 @@ func (c *iseCarApiServiceClient) DescribeCarV1(ctx context.Context, in *Describe
 	return out, nil
 }
 
+func (c *iseCarApiServiceClient) ListCarsV1(ctx context.Context, in *ListCarsV1Request, opts ...grpc.CallOption) (*ListCarsV1Response, error) {
+	out := new(ListCarsV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.ise_car_api.v1.IseCarApiService/ListCarsV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iseCarApiServiceClient) CreateCarV1(ctx context.Context, in *CreateCarV1Request, opts ...grpc.CallOption) (*CreateCarV1Response, error) {
+	out := new(CreateCarV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.ise_car_api.v1.IseCarApiService/CreateCarV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *iseCarApiServiceClient) RemoveCarV1(ctx context.Context, in *RemoveCarV1Request, opts ...grpc.CallOption) (*RemoveCarV1Response, error) {
+	out := new(RemoveCarV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.ise_car_api.v1.IseCarApiService/RemoveCarV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IseCarApiServiceServer is the server API for IseCarApiService service.
 // All implementations must embed UnimplementedIseCarApiServiceServer
 // for forward compatibility
 type IseCarApiServiceServer interface {
 	// DescribeCarV1 - Describe a car
 	DescribeCarV1(context.Context, *DescribeCarV1Request) (*DescribeCarV1Response, error)
+	// ListCarsV1 - List existing cars
+	ListCarsV1(context.Context, *ListCarsV1Request) (*ListCarsV1Response, error)
+	// CreateCarV1 - create new car
+	CreateCarV1(context.Context, *CreateCarV1Request) (*CreateCarV1Response, error)
+	// RemoveCarV1 - remove car by id
+	RemoveCarV1(context.Context, *RemoveCarV1Request) (*RemoveCarV1Response, error)
 	mustEmbedUnimplementedIseCarApiServiceServer()
 }
 
@@ -54,6 +93,15 @@ type UnimplementedIseCarApiServiceServer struct {
 
 func (UnimplementedIseCarApiServiceServer) DescribeCarV1(context.Context, *DescribeCarV1Request) (*DescribeCarV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeCarV1 not implemented")
+}
+func (UnimplementedIseCarApiServiceServer) ListCarsV1(context.Context, *ListCarsV1Request) (*ListCarsV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCarsV1 not implemented")
+}
+func (UnimplementedIseCarApiServiceServer) CreateCarV1(context.Context, *CreateCarV1Request) (*CreateCarV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCarV1 not implemented")
+}
+func (UnimplementedIseCarApiServiceServer) RemoveCarV1(context.Context, *RemoveCarV1Request) (*RemoveCarV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveCarV1 not implemented")
 }
 func (UnimplementedIseCarApiServiceServer) mustEmbedUnimplementedIseCarApiServiceServer() {}
 
@@ -86,6 +134,60 @@ func _IseCarApiService_DescribeCarV1_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IseCarApiService_ListCarsV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCarsV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IseCarApiServiceServer).ListCarsV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.ise_car_api.v1.IseCarApiService/ListCarsV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IseCarApiServiceServer).ListCarsV1(ctx, req.(*ListCarsV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IseCarApiService_CreateCarV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCarV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IseCarApiServiceServer).CreateCarV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.ise_car_api.v1.IseCarApiService/CreateCarV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IseCarApiServiceServer).CreateCarV1(ctx, req.(*CreateCarV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IseCarApiService_RemoveCarV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveCarV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IseCarApiServiceServer).RemoveCarV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.ise_car_api.v1.IseCarApiService/RemoveCarV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IseCarApiServiceServer).RemoveCarV1(ctx, req.(*RemoveCarV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IseCarApiService_ServiceDesc is the grpc.ServiceDesc for IseCarApiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -96,6 +198,18 @@ var IseCarApiService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DescribeCarV1",
 			Handler:    _IseCarApiService_DescribeCarV1_Handler,
+		},
+		{
+			MethodName: "ListCarsV1",
+			Handler:    _IseCarApiService_ListCarsV1_Handler,
+		},
+		{
+			MethodName: "CreateCarV1",
+			Handler:    _IseCarApiService_CreateCarV1_Handler,
+		},
+		{
+			MethodName: "RemoveCarV1",
+			Handler:    _IseCarApiService_RemoveCarV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
