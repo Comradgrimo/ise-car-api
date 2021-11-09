@@ -71,7 +71,7 @@ func TestStart(t *testing.T) {
 	retranslator.Close()
 
 	if !(locksCnt == sendCnt && sendCnt == removesCnt) {
-		t.Errorf("Error: read from db %v messages, sent to kafka %v, removed from db %v records. " +
+		t.Errorf("Error: read from db %v messages, sent to kafka %v, removed from db %v records. "+
 			"Expect them to be equal",
 			locksCnt, sendCnt, removesCnt)
 	}

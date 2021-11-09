@@ -23,11 +23,8 @@ func main() {
 		WorkerCount:    2,
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
 	r := retranslator.NewRetranslator(cfg)
-	r.Start(ctx)
+	r.Start(context.Background())
 
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 

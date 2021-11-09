@@ -38,6 +38,6 @@ func (r *repo) ListCars(_ context.Context) (model.Cars, error) {
 	return model.Cars{nil, nil}, nil
 }
 
-func (r *repo) RemoveCar(_ context.Context,  carID uint64) error {
+func (r *repo) RemoveCar(_ context.Context, carID uint64) error {
 	return nil
 }

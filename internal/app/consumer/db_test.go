@@ -33,15 +33,15 @@ func TestStart(t *testing.T) {
 
 	eventChan := make(chan model.CarEvent)
 
-	consTimeout := 2*time.Second
+	consumeTimeout := 2*time.Second
 	cons := NewDbConsumer(
 		1,
 		uint64(len(events)),
-		consTimeout,
+		consumeTimeout,
 		repo,
 		eventChan,
 	)
-	ctx, cancel := context.WithTimeout(context.Background(), consTimeout)
+	ctx, cancel := context.WithTimeout(context.Background(), consumeTimeout)
 	defer cancel()
 
 	cons.Start(ctx)
