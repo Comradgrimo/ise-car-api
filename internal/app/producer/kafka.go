@@ -17,7 +17,7 @@ type Producer interface {
 }
 
 type producer struct {
-	n       uint64
+	n uint64
 
 	sender sender.EventSender
 	events <-chan model.CarEvent

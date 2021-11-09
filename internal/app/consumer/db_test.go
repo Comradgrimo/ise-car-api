@@ -33,7 +33,7 @@ func TestStart(t *testing.T) {
 
 	eventChan := make(chan model.CarEvent)
 
-	consumeTimeout := 2*time.Second
+	consumeTimeout := 2 * time.Second
 	cons := NewDbConsumer(
 		1,
 		uint64(len(events)),

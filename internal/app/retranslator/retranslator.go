@@ -37,6 +37,7 @@ type retranslator struct {
 	consumer   consumer.Consumer
 	producer   producer.Producer
 	workerPool *workerpool.WorkerPool
+	cancel     context.CancelFunc
 }
 
 func NewRetranslator(cfg Config) Retranslator {
@@ -65,11 +66,13 @@ func NewRetranslator(cfg Config) Retranslator {
 }
 
 func (r *retranslator) Start(ctx context.Context) {
+	ctx, r.cancel = context.WithCancel(ctx)
 	r.producer.Start()
 	r.consumer.Start(ctx)
 }
 
 func (r *retranslator) Close() {
+	r.cancel()
 	r.consumer.Close()
 	r.producer.Close()
 	r.workerPool.StopWait()

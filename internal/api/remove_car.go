@@ -26,4 +26,3 @@ func (o *carAPI) RemoveCarV1(ctx context.Context, req *pb.RemoveCarV1Request) (*
 	}
 	return new(pb.RemoveCarV1Response), nil
 }
-

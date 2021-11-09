@@ -24,7 +24,7 @@ type consumer struct {
 	batchSize uint64
 	timeout   time.Duration
 
-	wg   *sync.WaitGroup
+	wg *sync.WaitGroup
 }
 
 // NewDbConsumer contains all consumer data

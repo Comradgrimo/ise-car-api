@@ -25,4 +25,3 @@ type carAPI struct {
 func NewCarAPI(r repo.Repo) pb.IseCarApiServiceServer {
 	return &carAPI{repo: r}
 }
-
