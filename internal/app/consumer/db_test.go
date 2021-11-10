@@ -17,13 +17,13 @@ func TestStart(t *testing.T) {
 			ID:     0,
 			Type:   model.Created,
 			Status: model.InProcess,
-			Entity: &model.Car{ID: 0, Title: "Toyota"},
+			Entity: &model.Car{ID: 0, CarInfo: "Toyota"},
 		},
 		{
 			ID:     1,
 			Type:   model.Created,
 			Status: model.InProcess,
-			Entity: &model.Car{ID: 1, Title: "Lexus"},
+			Entity: &model.Car{ID: 1, CarInfo: "Lexus"},
 		},
 	}
 	ctrl := gomock.NewController(t)

@@ -50,7 +50,7 @@ services:
       - ./config.yml:/root/config.yml
 
   postgres:
-    image: postgres:latest
+    image: postgres:14
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
       timeout: 45s
@@ -75,6 +75,13 @@ services:
     volumes:
       # - pgdata:/var/lib/postgresql/data
       - ./scripts/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
+#    environment:
+#      - POSTGRES_USER=user
+#      - POSTGRES_PASSWORD=password
+#    ports:
+#      - '5432:5432'
+#    volumes:
+#      - ./postgres-data:/var/lib/postgresql/data
 
   zookeeper:
     image: confluentinc/cp-zookeeper

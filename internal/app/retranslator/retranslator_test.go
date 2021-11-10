@@ -35,7 +35,7 @@ func TestStart(t *testing.T) {
 			ID:     i,
 			Type:   model.Created,
 			Status: model.InProcess,
-			Entity: &model.Car{ID: i, Title: "Toyota"},
+			Entity: &model.Car{ID: i, CarInfo: "Toyota"},
 		}
 		events = append(events, event)
 	}

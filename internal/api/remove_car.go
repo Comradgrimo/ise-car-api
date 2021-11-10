@@ -17,8 +17,7 @@ func (o *carAPI) RemoveCarV1(ctx context.Context, req *pb.RemoveCarV1Request) (*
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
-
-	err := o.repo.RemoveCar(ctx, req.CarId)
+	_, err := o.repo.Remove(ctx, req.GetCarId())
 	if err != nil {
 		log.Error().Err(err).Msg("RemoveCarV1 -- failed")
 

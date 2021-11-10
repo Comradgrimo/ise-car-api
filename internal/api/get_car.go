@@ -8,10 +8,10 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (o *carAPI) DescribeCarV1(
+func (o *carAPI) GetCarV1(
 	ctx context.Context,
-	req *pb.DescribeCarV1Request,
-) (*pb.DescribeCarV1Response, error) {
+	req *pb.GetCarV1Request,
+) (*pb.GetCarV1Response, error) {
 
 	if err := req.Validate(); err != nil {
 		log.Error().Err(err).Msg("DescribeCarV1 - invalid argument")
@@ -19,7 +19,7 @@ func (o *carAPI) DescribeCarV1(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	car, err := o.repo.DescribeCar(ctx, req.CarId)
+	car, err := o.repo.Get(ctx, req.CarId)
 	if err != nil {
 		log.Error().Err(err).Msg("DescribeCarV1 -- failed")
 
@@ -28,17 +28,18 @@ func (o *carAPI) DescribeCarV1(
 
 	if car == nil {
 		log.Debug().Uint64("carId", req.CarId).Msg("car not found")
-		totalCarNotFound.Inc()
-
-		return nil, status.Error(codes.NotFound, "car not found")
+		return nil, err
 	}
 
 	log.Debug().Msg("DescribeCarV1 - success")
-
-	return &pb.DescribeCarV1Response{
+	return &pb.GetCarV1Response{
 		Value: &pb.Car{
 			Id:    car.ID,
-			Title: car.Title,
+			CarInfo: car.CarInfo,
+			UserId: car.UserID,
+			TotalPrice: float32(car.TotalPrice),
+			RiskRate: float32(car.RiskRate),
+			CircsLink: car.CircsLink,
 		},
 	}, nil
 }

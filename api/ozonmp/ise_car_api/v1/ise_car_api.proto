@@ -10,7 +10,7 @@ option go_package = "github.com/ozonmp/ise-car-api/pkg/ise-car-api;ise_car_api";
 // IseCarApiService - Service for working with cars
 service IseCarApiService {
   // DescribeCarV1 - Describe a car
-  rpc DescribeCarV1(DescribeCarV1Request) returns (DescribeCarV1Response) {
+  rpc GetCarV1(GetCarV1Request) returns (GetCarV1Response) {
     option (google.api.http) = {
       get: "/v1/cars/{car_id}"
     };
@@ -18,41 +18,50 @@ service IseCarApiService {
   // ListCarsV1 - List existing cars
   rpc ListCarsV1(ListCarsV1Request) returns (ListCarsV1Response) {
     option (google.api.http) = {
-      get: "/v1/cars"
+      post: "/v1/cars/list"
+      body: "*"
     };
   };
 
-  // CreateCarV1 - create new car
-  rpc CreateCarV1(CreateCarV1Request) returns (CreateCarV1Response) {
+  // AddCarV1 - create new car
+  rpc AddCarV1(AddCarV1Request) returns (AddCarV1Response) {
     option (google.api.http) = {
-      post: "/v1/cars/{title}"
+      post: "/v1/cars/add"
+      body: "*"
     };
   };
   // RemoveCarV1 - remove car by id
   rpc RemoveCarV1(RemoveCarV1Request) returns (RemoveCarV1Response) {
     option (google.api.http) = {
-      delete: "/v1/cars/{car_id}"
+      post: "/v1/cars/delete"
+      body: "*"
     };
   }
 }
 
 message Car {
   uint64 id  = 1;
-  string title = 2;
+  string car_info = 2;
+  uint64 user_id = 3;
+  float total_price = 4;
+  float risk_rate = 5;
+  string circs_link = 6;
 }
 
-message DescribeCarV1Request {
+message GetCarV1Request {
   uint64 car_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
-message DescribeCarV1Response {
+message GetCarV1Response {
   Car value = 1;
 }
-message CreateCarV1Request {
-  string title = 1 [(validate.rules).string= {min_len: 1, max_len: 100}];
+message AddCarV1Request {
+  string car_info = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  float total_price = 2 [(validate.rules).float.gt = 0];
+  float risk_rate = 3 [(validate.rules).float.gt = 0];
 }
 
-message CreateCarV1Response {
+message AddCarV1Response {
   uint64 car_id = 1;
 }
 

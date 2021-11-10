@@ -19,11 +19,11 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IseCarApiServiceClient interface {
 	// DescribeCarV1 - Describe a car
-	DescribeCarV1(ctx context.Context, in *DescribeCarV1Request, opts ...grpc.CallOption) (*DescribeCarV1Response, error)
+	GetCarV1(ctx context.Context, in *GetCarV1Request, opts ...grpc.CallOption) (*GetCarV1Response, error)
 	// ListCarsV1 - List existing cars
 	ListCarsV1(ctx context.Context, in *ListCarsV1Request, opts ...grpc.CallOption) (*ListCarsV1Response, error)
-	// CreateCarV1 - create new car
-	CreateCarV1(ctx context.Context, in *CreateCarV1Request, opts ...grpc.CallOption) (*CreateCarV1Response, error)
+	// AddCarV1 - create new car
+	AddCarV1(ctx context.Context, in *AddCarV1Request, opts ...grpc.CallOption) (*AddCarV1Response, error)
 	// RemoveCarV1 - remove car by id
 	RemoveCarV1(ctx context.Context, in *RemoveCarV1Request, opts ...grpc.CallOption) (*RemoveCarV1Response, error)
 }
@@ -36,9 +36,9 @@ func NewIseCarApiServiceClient(cc grpc.ClientConnInterface) IseCarApiServiceClie
 	return &iseCarApiServiceClient{cc}
 }
 
-func (c *iseCarApiServiceClient) DescribeCarV1(ctx context.Context, in *DescribeCarV1Request, opts ...grpc.CallOption) (*DescribeCarV1Response, error) {
-	out := new(DescribeCarV1Response)
-	err := c.cc.Invoke(ctx, "/ozonmp.ise_car_api.v1.IseCarApiService/DescribeCarV1", in, out, opts...)
+func (c *iseCarApiServiceClient) GetCarV1(ctx context.Context, in *GetCarV1Request, opts ...grpc.CallOption) (*GetCarV1Response, error) {
+	out := new(GetCarV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.ise_car_api.v1.IseCarApiService/GetCarV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -54,9 +54,9 @@ func (c *iseCarApiServiceClient) ListCarsV1(ctx context.Context, in *ListCarsV1R
 	return out, nil
 }
 
-func (c *iseCarApiServiceClient) CreateCarV1(ctx context.Context, in *CreateCarV1Request, opts ...grpc.CallOption) (*CreateCarV1Response, error) {
-	out := new(CreateCarV1Response)
-	err := c.cc.Invoke(ctx, "/ozonmp.ise_car_api.v1.IseCarApiService/CreateCarV1", in, out, opts...)
+func (c *iseCarApiServiceClient) AddCarV1(ctx context.Context, in *AddCarV1Request, opts ...grpc.CallOption) (*AddCarV1Response, error) {
+	out := new(AddCarV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.ise_car_api.v1.IseCarApiService/AddCarV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -77,11 +77,11 @@ func (c *iseCarApiServiceClient) RemoveCarV1(ctx context.Context, in *RemoveCarV
 // for forward compatibility
 type IseCarApiServiceServer interface {
 	// DescribeCarV1 - Describe a car
-	DescribeCarV1(context.Context, *DescribeCarV1Request) (*DescribeCarV1Response, error)
+	GetCarV1(context.Context, *GetCarV1Request) (*GetCarV1Response, error)
 	// ListCarsV1 - List existing cars
 	ListCarsV1(context.Context, *ListCarsV1Request) (*ListCarsV1Response, error)
-	// CreateCarV1 - create new car
-	CreateCarV1(context.Context, *CreateCarV1Request) (*CreateCarV1Response, error)
+	// AddCarV1 - create new car
+	AddCarV1(context.Context, *AddCarV1Request) (*AddCarV1Response, error)
 	// RemoveCarV1 - remove car by id
 	RemoveCarV1(context.Context, *RemoveCarV1Request) (*RemoveCarV1Response, error)
 	mustEmbedUnimplementedIseCarApiServiceServer()
@@ -91,14 +91,14 @@ type IseCarApiServiceServer interface {
 type UnimplementedIseCarApiServiceServer struct {
 }
 
-func (UnimplementedIseCarApiServiceServer) DescribeCarV1(context.Context, *DescribeCarV1Request) (*DescribeCarV1Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DescribeCarV1 not implemented")
+func (UnimplementedIseCarApiServiceServer) GetCarV1(context.Context, *GetCarV1Request) (*GetCarV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCarV1 not implemented")
 }
 func (UnimplementedIseCarApiServiceServer) ListCarsV1(context.Context, *ListCarsV1Request) (*ListCarsV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCarsV1 not implemented")
 }
-func (UnimplementedIseCarApiServiceServer) CreateCarV1(context.Context, *CreateCarV1Request) (*CreateCarV1Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateCarV1 not implemented")
+func (UnimplementedIseCarApiServiceServer) AddCarV1(context.Context, *AddCarV1Request) (*AddCarV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddCarV1 not implemented")
 }
 func (UnimplementedIseCarApiServiceServer) RemoveCarV1(context.Context, *RemoveCarV1Request) (*RemoveCarV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveCarV1 not implemented")
@@ -116,20 +116,20 @@ func RegisterIseCarApiServiceServer(s grpc.ServiceRegistrar, srv IseCarApiServic
 	s.RegisterService(&IseCarApiService_ServiceDesc, srv)
 }
 
-func _IseCarApiService_DescribeCarV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DescribeCarV1Request)
+func _IseCarApiService_GetCarV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCarV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IseCarApiServiceServer).DescribeCarV1(ctx, in)
+		return srv.(IseCarApiServiceServer).GetCarV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ozonmp.ise_car_api.v1.IseCarApiService/DescribeCarV1",
+		FullMethod: "/ozonmp.ise_car_api.v1.IseCarApiService/GetCarV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IseCarApiServiceServer).DescribeCarV1(ctx, req.(*DescribeCarV1Request))
+		return srv.(IseCarApiServiceServer).GetCarV1(ctx, req.(*GetCarV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -152,20 +152,20 @@ func _IseCarApiService_ListCarsV1_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _IseCarApiService_CreateCarV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateCarV1Request)
+func _IseCarApiService_AddCarV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddCarV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IseCarApiServiceServer).CreateCarV1(ctx, in)
+		return srv.(IseCarApiServiceServer).AddCarV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ozonmp.ise_car_api.v1.IseCarApiService/CreateCarV1",
+		FullMethod: "/ozonmp.ise_car_api.v1.IseCarApiService/AddCarV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IseCarApiServiceServer).CreateCarV1(ctx, req.(*CreateCarV1Request))
+		return srv.(IseCarApiServiceServer).AddCarV1(ctx, req.(*AddCarV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -196,16 +196,16 @@ var IseCarApiService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*IseCarApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "DescribeCarV1",
-			Handler:    _IseCarApiService_DescribeCarV1_Handler,
+			MethodName: "GetCarV1",
+			Handler:    _IseCarApiService_GetCarV1_Handler,
 		},
 		{
 			MethodName: "ListCarsV1",
 			Handler:    _IseCarApiService_ListCarsV1_Handler,
 		},
 		{
-			MethodName: "CreateCarV1",
-			Handler:    _IseCarApiService_CreateCarV1_Handler,
+			MethodName: "AddCarV1",
+			Handler:    _IseCarApiService_AddCarV1_Handler,
 		},
 		{
 			MethodName: "RemoveCarV1",

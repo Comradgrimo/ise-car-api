@@ -3,14 +3,13 @@ package model
 // Car - car entity.
 type Car struct {
 	ID         uint64  `db:"id"`
-	Title      string  `db:"title"`
-	UserID     uint64  `db:"user_id"`
 	CarInfo    string  `db:"car_info"`
+	UserID     uint64  `db:"user_id"`
 	TotalPrice float64 `db:"total_price"`
 	RiskRate   float64 `db:"risk_rate"`
 	CircsLink  string  `db:"circs_link"`
 }
-type Cars []*Car
+type Cars []Car
 
 type EventType uint8
 

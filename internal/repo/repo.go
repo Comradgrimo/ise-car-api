@@ -3,6 +3,7 @@ package repo
 import (
 	"context"
 
+	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 
 	"github.com/ozonmp/ise-car-api/internal/model"
@@ -10,10 +11,10 @@ import (
 
 // Repo is DAO for Car
 type Repo interface {
-	CreateCar(ctx context.Context, carTitle string) (uint64, error)
-	DescribeCar(ctx context.Context, carID uint64) (*model.Car, error)
-	ListCars(ctx context.Context) (model.Cars, error)
-	RemoveCar(ctx context.Context, carID uint64) error
+	Add(ctx context.Context, car *model.Car) (uint64, error)
+	Get(ctx context.Context, carID uint64) (*model.Car, error)
+	List(ctx context.Context,limit uint64, cursor uint64) (model.Cars, error)
+	Remove(ctx context.Context, carID uint64) (bool, error)
 }
 
 type repo struct {
@@ -26,18 +27,33 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 	return &repo{db: db, batchSize: batchSize}
 }
 
-func (r *repo) DescribeCar(_ context.Context, carID uint64) (*model.Car, error) {
-	return nil, nil
+func (r *repo) Get(ctx context.Context, carID uint64) (*model.Car, error) {
+	query := sq.Select("*").PlaceholderFormat(sq.Dollar).From("car").Where(sq.Eq{"id": carID})
+
+	s, args, err := query.ToSql()
+	if err != nil {
+		return nil, err
+	}
+	var res model.Car
+	err = r.db.SelectContext(ctx, &res, s, args...)
+
+	return &res, err
 }
 
-func (r *repo) CreateCar(_ context.Context, carTitle string) (uint64, error) {
+func (r *repo) Add(_ context.Context, car *model.Car) (uint64, error) {
 	return 0, nil
 }
 
-func (r *repo) ListCars(_ context.Context) (model.Cars, error) {
-	return model.Cars{nil, nil}, nil
+func (r *repo) List(_ context.Context, limit uint64, cursor uint64) (model.Cars, error) {
+	return nil, nil
 }
 
-func (r *repo) RemoveCar(_ context.Context, carID uint64) error {
-	return nil
+func (r *repo) Remove(ctx context.Context, carID uint64) (bool, error) {
+	query := sq.Delete("car").PlaceholderFormat(sq.Dollar).Where(sq.Eq{"id": carID})
+	s, args, err := query.ToSql()
+	if err != nil {
+		return false, err
+	}
+	_, err = r.db.ExecContext(ctx, s, args...)
+	return true, err
 }

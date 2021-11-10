@@ -17,7 +17,7 @@ import ozonmp.ise_car_api.v1.ise_car_api_pb2
 class IseCarApiServiceBase(abc.ABC):
 
     @abc.abstractmethod
-    async def DescribeCarV1(self, stream: 'grpclib.server.Stream[ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Request, ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Response]') -> None:
+    async def GetCarV1(self, stream: 'grpclib.server.Stream[ozonmp.ise_car_api.v1.ise_car_api_pb2.GetCarV1Request, ozonmp.ise_car_api.v1.ise_car_api_pb2.GetCarV1Response]') -> None:
         pass
 
     @abc.abstractmethod
@@ -25,7 +25,7 @@ class IseCarApiServiceBase(abc.ABC):
         pass
 
     @abc.abstractmethod
-    async def CreateCarV1(self, stream: 'grpclib.server.Stream[ozonmp.ise_car_api.v1.ise_car_api_pb2.CreateCarV1Request, ozonmp.ise_car_api.v1.ise_car_api_pb2.CreateCarV1Response]') -> None:
+    async def AddCarV1(self, stream: 'grpclib.server.Stream[ozonmp.ise_car_api.v1.ise_car_api_pb2.AddCarV1Request, ozonmp.ise_car_api.v1.ise_car_api_pb2.AddCarV1Response]') -> None:
         pass
 
     @abc.abstractmethod
@@ -34,11 +34,11 @@ class IseCarApiServiceBase(abc.ABC):
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/ozonmp.ise_car_api.v1.IseCarApiService/DescribeCarV1': grpclib.const.Handler(
-                self.DescribeCarV1,
+            '/ozonmp.ise_car_api.v1.IseCarApiService/GetCarV1': grpclib.const.Handler(
+                self.GetCarV1,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Request,
-                ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Response,
+                ozonmp.ise_car_api.v1.ise_car_api_pb2.GetCarV1Request,
+                ozonmp.ise_car_api.v1.ise_car_api_pb2.GetCarV1Response,
             ),
             '/ozonmp.ise_car_api.v1.IseCarApiService/ListCarsV1': grpclib.const.Handler(
                 self.ListCarsV1,
@@ -46,11 +46,11 @@ class IseCarApiServiceBase(abc.ABC):
                 ozonmp.ise_car_api.v1.ise_car_api_pb2.ListCarsV1Request,
                 ozonmp.ise_car_api.v1.ise_car_api_pb2.ListCarsV1Response,
             ),
-            '/ozonmp.ise_car_api.v1.IseCarApiService/CreateCarV1': grpclib.const.Handler(
-                self.CreateCarV1,
+            '/ozonmp.ise_car_api.v1.IseCarApiService/AddCarV1': grpclib.const.Handler(
+                self.AddCarV1,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                ozonmp.ise_car_api.v1.ise_car_api_pb2.CreateCarV1Request,
-                ozonmp.ise_car_api.v1.ise_car_api_pb2.CreateCarV1Response,
+                ozonmp.ise_car_api.v1.ise_car_api_pb2.AddCarV1Request,
+                ozonmp.ise_car_api.v1.ise_car_api_pb2.AddCarV1Response,
             ),
             '/ozonmp.ise_car_api.v1.IseCarApiService/RemoveCarV1': grpclib.const.Handler(
                 self.RemoveCarV1,
@@ -64,11 +64,11 @@ class IseCarApiServiceBase(abc.ABC):
 class IseCarApiServiceStub:
 
     def __init__(self, channel: grpclib.client.Channel) -> None:
-        self.DescribeCarV1 = grpclib.client.UnaryUnaryMethod(
+        self.GetCarV1 = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/ozonmp.ise_car_api.v1.IseCarApiService/DescribeCarV1',
-            ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Request,
-            ozonmp.ise_car_api.v1.ise_car_api_pb2.DescribeCarV1Response,
+            '/ozonmp.ise_car_api.v1.IseCarApiService/GetCarV1',
+            ozonmp.ise_car_api.v1.ise_car_api_pb2.GetCarV1Request,
+            ozonmp.ise_car_api.v1.ise_car_api_pb2.GetCarV1Response,
         )
         self.ListCarsV1 = grpclib.client.UnaryUnaryMethod(
             channel,
@@ -76,11 +76,11 @@ class IseCarApiServiceStub:
             ozonmp.ise_car_api.v1.ise_car_api_pb2.ListCarsV1Request,
             ozonmp.ise_car_api.v1.ise_car_api_pb2.ListCarsV1Response,
         )
-        self.CreateCarV1 = grpclib.client.UnaryUnaryMethod(
+        self.AddCarV1 = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/ozonmp.ise_car_api.v1.IseCarApiService/CreateCarV1',
-            ozonmp.ise_car_api.v1.ise_car_api_pb2.CreateCarV1Request,
-            ozonmp.ise_car_api.v1.ise_car_api_pb2.CreateCarV1Response,
+            '/ozonmp.ise_car_api.v1.IseCarApiService/AddCarV1',
+            ozonmp.ise_car_api.v1.ise_car_api_pb2.AddCarV1Request,
+            ozonmp.ise_car_api.v1.ise_car_api_pb2.AddCarV1Response,
         )
         self.RemoveCarV1 = grpclib.client.UnaryUnaryMethod(
             channel,

@@ -31,8 +31,8 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_IseCarApiService_DescribeCarV1_0(ctx context.Context, marshaler runtime.Marshaler, client IseCarApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DescribeCarV1Request
+func request_IseCarApiService_GetCarV1_0(ctx context.Context, marshaler runtime.Marshaler, client IseCarApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetCarV1Request
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -52,13 +52,13 @@ func request_IseCarApiService_DescribeCarV1_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "car_id", err)
 	}
 
-	msg, err := client.DescribeCarV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetCarV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_IseCarApiService_DescribeCarV1_0(ctx context.Context, marshaler runtime.Marshaler, server IseCarApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DescribeCarV1Request
+func local_request_IseCarApiService_GetCarV1_0(ctx context.Context, marshaler runtime.Marshaler, server IseCarApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetCarV1Request
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -78,7 +78,7 @@ func local_request_IseCarApiService_DescribeCarV1_0(ctx context.Context, marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "car_id", err)
 	}
 
-	msg, err := server.DescribeCarV1(ctx, &protoReq)
+	msg, err := server.GetCarV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -86,6 +86,14 @@ func local_request_IseCarApiService_DescribeCarV1_0(ctx context.Context, marshal
 func request_IseCarApiService_ListCarsV1_0(ctx context.Context, marshaler runtime.Marshaler, client IseCarApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ListCarsV1Request
 	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 
 	msg, err := client.ListCarsV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -96,59 +104,49 @@ func local_request_IseCarApiService_ListCarsV1_0(ctx context.Context, marshaler 
 	var protoReq ListCarsV1Request
 	var metadata runtime.ServerMetadata
 
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
 	msg, err := server.ListCarsV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_IseCarApiService_CreateCarV1_0(ctx context.Context, marshaler runtime.Marshaler, client IseCarApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateCarV1Request
+func request_IseCarApiService_AddCarV1_0(ctx context.Context, marshaler runtime.Marshaler, client IseCarApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AddCarV1Request
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["title"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "title")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	protoReq.Title, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "title", err)
-	}
-
-	msg, err := client.CreateCarV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.AddCarV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_IseCarApiService_CreateCarV1_0(ctx context.Context, marshaler runtime.Marshaler, server IseCarApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateCarV1Request
+func local_request_IseCarApiService_AddCarV1_0(ctx context.Context, marshaler runtime.Marshaler, server IseCarApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AddCarV1Request
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["title"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "title")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	protoReq.Title, err = runtime.String(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "title", err)
-	}
-
-	msg, err := server.CreateCarV1(ctx, &protoReq)
+	msg, err := server.AddCarV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -157,21 +155,12 @@ func request_IseCarApiService_RemoveCarV1_0(ctx context.Context, marshaler runti
 	var protoReq RemoveCarV1Request
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["car_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "car_id")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-
-	protoReq.CarId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "car_id", err)
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.RemoveCarV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -183,21 +172,12 @@ func local_request_IseCarApiService_RemoveCarV1_0(ctx context.Context, marshaler
 	var protoReq RemoveCarV1Request
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["car_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "car_id")
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-
-	protoReq.CarId, err = runtime.Uint64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "car_id", err)
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.RemoveCarV1(ctx, &protoReq)
@@ -211,18 +191,18 @@ func local_request_IseCarApiService_RemoveCarV1_0(ctx context.Context, marshaler
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterIseCarApiServiceHandlerFromEndpoint instead.
 func RegisterIseCarApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server IseCarApiServiceServer) error {
 
-	mux.Handle("GET", pattern_IseCarApiService_DescribeCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_IseCarApiService_GetCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/DescribeCarV1", runtime.WithHTTPPathPattern("/v1/cars/{car_id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/GetCarV1", runtime.WithHTTPPathPattern("/v1/cars/{car_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_IseCarApiService_DescribeCarV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_IseCarApiService_GetCarV1_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -230,17 +210,17 @@ func RegisterIseCarApiServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 			return
 		}
 
-		forward_IseCarApiService_DescribeCarV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_IseCarApiService_GetCarV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_IseCarApiService_ListCarsV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_IseCarApiService_ListCarsV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/ListCarsV1", runtime.WithHTTPPathPattern("/v1/cars"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/ListCarsV1", runtime.WithHTTPPathPattern("/v1/cars/list"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -257,18 +237,18 @@ func RegisterIseCarApiServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 
 	})
 
-	mux.Handle("POST", pattern_IseCarApiService_CreateCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_IseCarApiService_AddCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/CreateCarV1", runtime.WithHTTPPathPattern("/v1/cars/{title}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/AddCarV1", runtime.WithHTTPPathPattern("/v1/cars/add"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_IseCarApiService_CreateCarV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_IseCarApiService_AddCarV1_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -276,17 +256,17 @@ func RegisterIseCarApiServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 			return
 		}
 
-		forward_IseCarApiService_CreateCarV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_IseCarApiService_AddCarV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_IseCarApiService_RemoveCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_IseCarApiService_RemoveCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/RemoveCarV1", runtime.WithHTTPPathPattern("/v1/cars/{car_id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/RemoveCarV1", runtime.WithHTTPPathPattern("/v1/cars/delete"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -344,31 +324,31 @@ func RegisterIseCarApiServiceHandler(ctx context.Context, mux *runtime.ServeMux,
 // "IseCarApiServiceClient" to call the correct interceptors.
 func RegisterIseCarApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client IseCarApiServiceClient) error {
 
-	mux.Handle("GET", pattern_IseCarApiService_DescribeCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_IseCarApiService_GetCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/DescribeCarV1", runtime.WithHTTPPathPattern("/v1/cars/{car_id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/GetCarV1", runtime.WithHTTPPathPattern("/v1/cars/{car_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_IseCarApiService_DescribeCarV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_IseCarApiService_GetCarV1_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_IseCarApiService_DescribeCarV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_IseCarApiService_GetCarV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_IseCarApiService_ListCarsV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_IseCarApiService_ListCarsV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/ListCarsV1", runtime.WithHTTPPathPattern("/v1/cars"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/ListCarsV1", runtime.WithHTTPPathPattern("/v1/cars/list"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -384,31 +364,31 @@ func RegisterIseCarApiServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 
 	})
 
-	mux.Handle("POST", pattern_IseCarApiService_CreateCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_IseCarApiService_AddCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/CreateCarV1", runtime.WithHTTPPathPattern("/v1/cars/{title}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/AddCarV1", runtime.WithHTTPPathPattern("/v1/cars/add"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_IseCarApiService_CreateCarV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_IseCarApiService_AddCarV1_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_IseCarApiService_CreateCarV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_IseCarApiService_AddCarV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_IseCarApiService_RemoveCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_IseCarApiService_RemoveCarV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/RemoveCarV1", runtime.WithHTTPPathPattern("/v1/cars/{car_id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.ise_car_api.v1.IseCarApiService/RemoveCarV1", runtime.WithHTTPPathPattern("/v1/cars/delete"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -428,21 +408,21 @@ func RegisterIseCarApiServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 }
 
 var (
-	pattern_IseCarApiService_DescribeCarV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "cars", "car_id"}, ""))
+	pattern_IseCarApiService_GetCarV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "cars", "car_id"}, ""))
 
-	pattern_IseCarApiService_ListCarsV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "cars"}, ""))
+	pattern_IseCarApiService_ListCarsV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "cars", "list"}, ""))
 
-	pattern_IseCarApiService_CreateCarV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "cars", "title"}, ""))
+	pattern_IseCarApiService_AddCarV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "cars", "add"}, ""))
 
-	pattern_IseCarApiService_RemoveCarV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "cars", "car_id"}, ""))
+	pattern_IseCarApiService_RemoveCarV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "cars", "delete"}, ""))
 )
 
 var (
-	forward_IseCarApiService_DescribeCarV1_0 = runtime.ForwardResponseMessage
+	forward_IseCarApiService_GetCarV1_0 = runtime.ForwardResponseMessage
 
 	forward_IseCarApiService_ListCarsV1_0 = runtime.ForwardResponseMessage
 
-	forward_IseCarApiService_CreateCarV1_0 = runtime.ForwardResponseMessage
+	forward_IseCarApiService_AddCarV1_0 = runtime.ForwardResponseMessage
 
 	forward_IseCarApiService_RemoveCarV1_0 = runtime.ForwardResponseMessage
 )
