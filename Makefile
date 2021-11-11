@@ -76,7 +76,7 @@ deps-go:
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.5.0
 	go install github.com/envoyproxy/protoc-gen-validate@$(PGV_VERSION)
 	go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
-	go install github.com/bufbuild/buf/cmd/buf@v1.0
+	go install github.com/bufbuild/buf/cmd/buf@v0.56.0
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking@latest
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-lint@latest
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1

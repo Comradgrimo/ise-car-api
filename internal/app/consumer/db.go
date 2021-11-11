@@ -49,7 +49,7 @@ func NewDbConsumer(
 
 func timeoutWithJitter(timeout time.Duration, deviation float64) time.Duration {
 	absoluteDeviation := int64(float64(timeout.Nanoseconds()) * deviation)
-	jitter := rand.Int63n(absoluteDeviation) - absoluteDeviation/2
+	jitter := rand.Int63n(absoluteDeviation) - absoluteDeviation/2 //nolint
 	return time.Duration(timeout.Nanoseconds()+jitter) * time.Nanosecond
 }
 
@@ -66,7 +66,7 @@ func (c *consumer) Start(ctx context.Context) {
 			ticker := time.NewTicker(timeoutWithJitter(c.timeout, 0.1))
 			for {
 				// return with block. gets from db events and in the same time locks them in db
-				events, err := c.repo.Lock(c.batchSize)
+				events, err := c.repo.Lock(ctxWithTimeout, c.batchSize)
 				if err != nil {
 					continue
 				}

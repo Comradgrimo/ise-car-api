@@ -96,13 +96,4 @@ func (r *repo) Remove(ctx context.Context, carID uint64) (bool, error) {
 
 	_, err = r.db.ExecContext(ctx, s, args...)
 	return true, err
-
-	//we don't really delete car record from db - we just mark deleted=true
-	//query := sq.Delete("car").PlaceholderFormat(sq.Dollar).Where(sq.Eq{"id": carID})
-	//s, args, err := query.ToSql()
-	//if err != nil {
-	//	return false, err
-	//}
-	//_, err = r.db.ExecContext(ctx, s, args...)
-	//return true, err
 }
