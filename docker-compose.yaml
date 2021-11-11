@@ -70,18 +70,12 @@ services:
       POSTGRES_DB: ise_car_api
       APP_DB_USER: docker
       APP_DB_PASS: docker
+      APP_DB_NAME: ise_car_api
     networks:
       - ompnw
     volumes:
       # - pgdata:/var/lib/postgresql/data
       - ./scripts/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
-#    environment:
-#      - POSTGRES_USER=user
-#      - POSTGRES_PASSWORD=password
-#    ports:
-#      - '5432:5432'
-#    volumes:
-#      - ./postgres-data:/var/lib/postgresql/data
 
   zookeeper:
     image: confluentinc/cp-zookeeper

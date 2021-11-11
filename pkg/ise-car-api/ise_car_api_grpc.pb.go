@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IseCarApiServiceClient interface {
-	// DescribeCarV1 - Describe a car
+	// GetCarV1 - Get a car by id
 	GetCarV1(ctx context.Context, in *GetCarV1Request, opts ...grpc.CallOption) (*GetCarV1Response, error)
 	// ListCarsV1 - List existing cars
 	ListCarsV1(ctx context.Context, in *ListCarsV1Request, opts ...grpc.CallOption) (*ListCarsV1Response, error)
@@ -76,7 +76,7 @@ func (c *iseCarApiServiceClient) RemoveCarV1(ctx context.Context, in *RemoveCarV
 // All implementations must embed UnimplementedIseCarApiServiceServer
 // for forward compatibility
 type IseCarApiServiceServer interface {
-	// DescribeCarV1 - Describe a car
+	// GetCarV1 - Get a car by id
 	GetCarV1(context.Context, *GetCarV1Request) (*GetCarV1Response, error)
 	// ListCarsV1 - List existing cars
 	ListCarsV1(context.Context, *ListCarsV1Request) (*ListCarsV1Response, error)

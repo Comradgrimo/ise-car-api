@@ -271,6 +271,13 @@ func (m *AddCarV1Request) Validate() error {
 		}
 	}
 
+	if m.GetUserId() <= 0 {
+		return AddCarV1RequestValidationError{
+			field:  "UserId",
+			reason: "value must be greater than 0",
+		}
+	}
+
 	if m.GetTotalPrice() <= 0 {
 		return AddCarV1RequestValidationError{
 			field:  "TotalPrice",
@@ -282,6 +289,13 @@ func (m *AddCarV1Request) Validate() error {
 		return AddCarV1RequestValidationError{
 			field:  "RiskRate",
 			reason: "value must be greater than 0",
+		}
+	}
+
+	if l := utf8.RuneCountInString(m.GetCircsLink()); l < 1 || l > 100 {
+		return AddCarV1RequestValidationError{
+			field:  "CircsLink",
+			reason: "value length must be between 1 and 100 runes, inclusive",
 		}
 	}
 
@@ -417,6 +431,20 @@ func (m *ListCarsV1Request) Validate() error {
 		return nil
 	}
 
+	if m.GetCursor() <= 0 {
+		return ListCarsV1RequestValidationError{
+			field:  "Cursor",
+			reason: "value must be greater than 0",
+		}
+	}
+
+	if m.GetLimit() <= 0 {
+		return ListCarsV1RequestValidationError{
+			field:  "Limit",
+			reason: "value must be greater than 0",
+		}
+	}
+
 	return nil
 }
 
@@ -484,13 +512,13 @@ func (m *ListCarsV1Response) Validate() error {
 		return nil
 	}
 
-	for idx, item := range m.GetItems() {
+	for idx, item := range m.GetCars() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return ListCarsV1ResponseValidationError{
-					field:  fmt.Sprintf("Items[%v]", idx),
+					field:  fmt.Sprintf("Cars[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}

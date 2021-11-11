@@ -2,7 +2,7 @@ package repo
 
 import (
 	"context"
-
+	"database/sql"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 
@@ -13,7 +13,7 @@ import (
 type Repo interface {
 	Add(ctx context.Context, car *model.Car) (uint64, error)
 	Get(ctx context.Context, carID uint64) (*model.Car, error)
-	List(ctx context.Context,limit uint64, cursor uint64) (model.Cars, error)
+	List(ctx context.Context, cursor uint64, limit uint64) (model.Cars, error)
 	Remove(ctx context.Context, carID uint64) (bool, error)
 }
 
@@ -28,24 +28,64 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 }
 
 func (r *repo) Get(ctx context.Context, carID uint64) (*model.Car, error) {
-	query := sq.Select("*").PlaceholderFormat(sq.Dollar).From("car").Where(sq.Eq{"id": carID})
+	query := sq.Select("id, car_info, user_id, total_price, risk_rate, circs_link").PlaceholderFormat(sq.Dollar).
+		From("car").Where(sq.And{sq.Eq{"id": carID}, sq.Eq{"removed": false}})
 
 	s, args, err := query.ToSql()
 	if err != nil {
 		return nil, err
 	}
 	var res model.Car
-	err = r.db.SelectContext(ctx, &res, s, args...)
-
+	if err = r.db.GetContext(ctx, &res, s, args...); err != nil {
+		return nil, err
+	}
 	return &res, err
 }
 
-func (r *repo) Add(_ context.Context, car *model.Car) (uint64, error) {
-	return 0, nil
+func (r *repo) Add(ctx context.Context, car *model.Car) (uint64, error) {
+
+	dummyUserId := 1
+	dummyCircsLink := ""
+	query := sq.Insert("car").PlaceholderFormat(sq.Dollar).Columns(
+		"car_info", "user_id", "total_price", "risk_rate", "circs_link").
+		Values(car.CarInfo, dummyUserId, car.TotalPrice, car.RiskRate, dummyCircsLink).
+		Suffix("RETURNING id").
+		RunWith(r.db)
+
+	rows, err := query.QueryContext(ctx)
+	if err != nil {
+		return 0, err
+	}
+
+	var id uint64
+	if rows.Next() {
+		err = rows.Scan(&id)
+
+		if err != nil {
+			return 0, err
+		}
+
+		return id, nil
+	} else {
+		return 0, sql.ErrNoRows
+	}
 }
 
-func (r *repo) List(_ context.Context, limit uint64, cursor uint64) (model.Cars, error) {
-	return nil, nil
+func (r *repo) List(ctx context.Context, cursor uint64, limit uint64) (model.Cars, error) {
+	query := sq.Select("id, car_info, user_id, total_price, risk_rate, circs_link").
+		From("car").
+		Offset(cursor).Limit(limit)
+
+	s, args, err := query.ToSql()
+	if err != nil {
+		return nil, err
+	}
+	var res model.Cars
+
+	err = r.db.SelectContext(ctx, &res, s, args...)
+
+	return res, err
+
 }
 
 func (r *repo) Remove(ctx context.Context, carID uint64) (bool, error) {

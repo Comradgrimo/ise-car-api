@@ -9,12 +9,14 @@ import (
 )
 
 func (o *carAPI) AddCarV1(ctx context.Context, req *pb.AddCarV1Request) (*pb.AddCarV1Response, error) {
-	log.Debug().Msg(fmt.Sprintf("CreateCarV1 called: title=%v", req.CarInfo))
+	log.Debug().Msg(fmt.Sprintf("AddCarV1 called: title=%v", req.CarInfo))
 
 	car := model.Car{
 		CarInfo:    req.GetCarInfo(),
+		UserID:     req.GetUserId(),
 		TotalPrice: float64(req.GetTotalPrice()),
 		RiskRate:   float64(req.GetRiskRate()),
+		CircsLink:  req.GetCircsLink(),
 	}
 	carID, err := o.repo.Add(ctx, &car)
 	return &pb.AddCarV1Response{CarId: carID}, err

@@ -14,14 +14,14 @@ func (o *carAPI) GetCarV1(
 ) (*pb.GetCarV1Response, error) {
 
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("DescribeCarV1 - invalid argument")
+		log.Error().Err(err).Msg("GetCarV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	car, err := o.repo.Get(ctx, req.CarId)
+	car, err := o.repo.Get(ctx, req.GetCarId())
 	if err != nil {
-		log.Error().Err(err).Msg("DescribeCarV1 -- failed")
+		log.Error().Err(err).Msg("GetCarV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -31,7 +31,7 @@ func (o *carAPI) GetCarV1(
 		return nil, err
 	}
 
-	log.Debug().Msg("DescribeCarV1 - success")
+	log.Debug().Msg("GetCarV1 - success")
 	return &pb.GetCarV1Response{
 		Value: &pb.Car{
 			Id:    car.ID,
