@@ -67,7 +67,7 @@ func NewRetranslator(cfg Config) Retranslator {
 
 func (r *retranslator) Start(ctx context.Context) {
 	ctx, r.cancel = context.WithCancel(ctx)
-	r.producer.Start()
+	r.producer.Start(ctx)
 	r.consumer.Start(ctx)
 }
 

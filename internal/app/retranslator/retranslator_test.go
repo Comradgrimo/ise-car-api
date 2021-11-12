@@ -42,8 +42,8 @@ func TestStart(t *testing.T) {
 
 	locksCnt := uint64(0)
 	repo.EXPECT().
-		Lock(gomock.Any()).
-		DoAndReturn(func(consumeSize uint64) ([]model.CarEvent, error) {
+		Lock(gomock.Any(), gomock.Any()).
+		DoAndReturn(func(ctx context.Context, consumeSize uint64) ([]model.CarEvent, error) {
 			atomic.AddUint64(&locksCnt, consumeSize)
 			return events, nil
 		}).
@@ -58,9 +58,10 @@ func TestStart(t *testing.T) {
 
 	removesCnt := uint64(0)
 
-	repo.EXPECT().Remove(gomock.Any()).DoAndReturn(func(ids []uint64) error {
+	repo.EXPECT().Remove(gomock.Any(), gomock.Any()).
+		DoAndReturn(func(ctx context.Context, ids []uint64) (bool, error) {
 		atomic.AddUint64(&removesCnt, 1)
-		return nil
+		return true, nil
 	}).AnyTimes()
 	retranslator := NewRetranslator(cfg)
 
