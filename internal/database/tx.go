@@ -7,9 +7,10 @@ import (
 	"github.com/pkg/errors"
 )
 
-type WithTxFunc func(ctx context.Context, tx *sqlx.Tx) (interface{}, error)
+type withTxFunc func(ctx context.Context, tx *sqlx.Tx) (interface{}, error)
 
-func WithTx(ctx context.Context, db *sqlx.DB, fn WithTxFunc) (interface{}, error) {
+// WithTx - wraps with transaction
+func WithTx(ctx context.Context, db *sqlx.DB, fn withTxFunc) (interface{}, error) {
 	t, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		return nil, errors.Wrap(err, "db.BeginTxx()")

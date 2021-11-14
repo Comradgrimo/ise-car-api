@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// EventRepo - repo for events
 type EventRepo interface {
 	Lock(ctx context.Context, n uint64) ([]model.CarEvent, error) //blocks n records in DB
 	Unlock(ctx context.Context, eventIDs []uint64) error
@@ -25,7 +26,7 @@ func NewEventRepo(db *sqlx.DB, batchSize uint) EventRepo {
 }
 
 func (r *eventRepo) Lock(ctx context.Context, n uint64) ([]model.CarEvent, error) {
-	var interval_in_seconds int = 3 //todo jr fill it from config or something
+	secondsInterval := 3 //todo jr fill it from config or something
 	const query = `update car_event
 				set status = :status, updated = now()
 				where car_id in (
@@ -41,8 +42,8 @@ func (r *eventRepo) Lock(ctx context.Context, n uint64) ([]model.CarEvent, error
 
 	rows, err := r.db.NamedQueryContext(ctx, query, map[string]interface{}{
 		"status": model.InProcess.String(),
-		"limit": n,
-		"inter": interval_in_seconds,
+		"limit":  n,
+		"inter":  secondsInterval,
 	})
 	if err != nil {
 		return nil, err
@@ -69,7 +70,9 @@ func (r *eventRepo) Unlock(ctx context.Context, eventIDs []uint64) error {
 		Set("status", model.Available.String()).
 		Set("updated", time.Now())
 	s, args, err := query.ToSql()
-
+	if err != nil {
+		return err
+	}
 	_, err = r.db.ExecContext(ctx, s, args...)
 	return err
 }

@@ -10,6 +10,7 @@ import (
 	"github.com/ozonmp/ise-car-api/internal/model"
 )
 
+// Consumer - gets events from db and passes them to producer
 type Consumer interface {
 	Start(ctx context.Context)
 	Close()

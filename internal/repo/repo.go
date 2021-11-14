@@ -54,7 +54,7 @@ func (r *repo) Add(ctx context.Context, car *model.Car) (uint64, error) {
 			return id, err
 		}
 		car.ID = id
-		payload, err := getJsonBytes(car)
+		payload, err := getJSONString(car)
 		if err != nil {
 			return nil, err
 		}
@@ -92,7 +92,7 @@ func (r *repo) Remove(ctx context.Context, carID uint64) (bool, error) {
 		if err := removeCar(ctx, carID, tx); err != nil {
 			return nil, err
 		}
-		if err := insertEvent(ctx, carID, model.Removed,"\"\"", tx); err != nil {
+		if err := insertEvent(ctx, carID, model.Removed, "\"\"", tx); err != nil {
 			return nil, err
 		}
 		return nil, nil
@@ -120,11 +120,11 @@ func removeCar(ctx context.Context, carID uint64, tx *sqlx.Tx) error {
 }
 
 func addCar(ctx context.Context, car *model.Car, tx *sqlx.Tx) (uint64, error) {
-	dummyUserId := 1
+	dummyUserID := 1
 	dummyCircsLink := ""
 	query := sb.Insert("car").Columns(
 		"car_info", "user_id", "total_price", "risk_rate", "circs_link").
-		Values(car.CarInfo, dummyUserId, car.TotalPrice, car.RiskRate, dummyCircsLink).
+		Values(car.CarInfo, dummyUserID, car.TotalPrice, car.RiskRate, dummyCircsLink).
 		Suffix("RETURNING id")
 	s, args, err := query.ToSql()
 	if err != nil {
@@ -145,12 +145,12 @@ func addCar(ctx context.Context, car *model.Car, tx *sqlx.Tx) (uint64, error) {
 			return 0, err
 		}
 		return id, nil
-	} else {
-		if rows.Err() != nil {
-			return 0, rows.Err()
-		}
-		return 0, sql.ErrNoRows
 	}
+	if rows.Err() != nil {
+		return 0, rows.Err()
+	}
+	return 0, sql.ErrNoRows
+
 }
 func insertEvent(ctx context.Context, carID uint64, eventType model.EventType, payload string, tx *sqlx.Tx) error {
 	query := sb.Insert("car_event").
@@ -165,7 +165,7 @@ func insertEvent(ctx context.Context, carID uint64, eventType model.EventType, p
 	return err
 }
 
-func getJsonBytes(car *model.Car) (string, error) {
+func getJSONString(car *model.Car) (string, error) {
 	jsonBytes, err := json.Marshal(car)
 
 	if err != nil {

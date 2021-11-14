@@ -13,11 +13,13 @@ import (
 	"github.com/gammazero/workerpool"
 )
 
+// Retranslator - retranslator
 type Retranslator interface {
 	Start(ctx context.Context)
 	Close()
 }
 
+// Config - config for retranslator
 type Config struct {
 	ChannelSize uint64
 
@@ -40,6 +42,7 @@ type retranslator struct {
 	cancel     context.CancelFunc
 }
 
+// NewRetranslator - retranslator constructor
 func NewRetranslator(cfg Config) Retranslator {
 	events := make(chan model.CarEvent, cfg.ChannelSize)
 	workerPool := workerpool.New(cfg.WorkerCount)
