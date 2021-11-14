@@ -37,7 +37,7 @@ func (o *carAPI) GetCarV1(
 			Id:         car.ID,
 			CarInfo:    car.CarInfo,
 			UserId:     car.UserID,
-			TotalPrice: float32(car.TotalPrice),
+			TotalPrice: car.TotalPrice,
 			RiskRate:   float32(car.RiskRate),
 			CircsLink:  car.CircsLink,
 		},

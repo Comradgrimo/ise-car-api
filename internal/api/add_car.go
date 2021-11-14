@@ -14,7 +14,7 @@ func (o *carAPI) AddCarV1(ctx context.Context, req *pb.AddCarV1Request) (*pb.Add
 	car := model.Car{
 		CarInfo:    req.GetCarInfo(),
 		UserID:     req.GetUserId(),
-		TotalPrice: float64(req.GetTotalPrice()),
+		TotalPrice: req.GetTotalPrice(),
 		RiskRate:   float64(req.GetRiskRate()),
 		CircsLink:  req.GetCircsLink(),
 	}

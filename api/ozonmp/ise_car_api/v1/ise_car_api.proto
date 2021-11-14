@@ -43,7 +43,7 @@ message Car {
   uint64 id  = 1;
   string car_info = 2;
   uint64 user_id = 3;
-  float total_price = 4;
+  uint64 total_price = 4;
   float risk_rate = 5;
   string circs_link = 6;
 }
@@ -58,7 +58,7 @@ message GetCarV1Response {
 message AddCarV1Request {
   string car_info = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
   uint64 user_id = 2 [(validate.rules).uint64.gt = 0];
-  float total_price = 3 [(validate.rules).float.gt = 0];
+  uint64 total_price = 3 [(validate.rules).uint64.gt = 0];
   float risk_rate = 4 [(validate.rules).float.gt = 0];
   string circs_link = 5 [(validate.rules).string = {min_len: 1, max_len: 100}];
 }

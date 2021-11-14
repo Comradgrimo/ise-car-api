@@ -29,7 +29,7 @@ func convertCarToProtobuf(orig *model.Car) *pb.Car {
 		Id:         orig.ID,
 		CarInfo:    orig.CarInfo,
 		UserId:     orig.UserID,
-		TotalPrice: float32(orig.TotalPrice),
+		TotalPrice: orig.TotalPrice,
 		RiskRate:   float32(orig.RiskRate),
 		CircsLink:  orig.CircsLink,
 	}

@@ -2,13 +2,14 @@ package model
 
 // Car - car entity.
 type Car struct {
-	ID         uint64  `db:"id"`
-	CarInfo    string  `db:"car_info"`
-	UserID     uint64  `db:"user_id"`
-	TotalPrice float64 `db:"total_price"`
-	RiskRate   float64 `db:"risk_rate"`
-	CircsLink  string  `db:"circs_link"`
+	ID         uint64  `db:"id" json:"id"`
+	CarInfo    string  `db:"car_info" json:"car_info"`
+	UserID     uint64  `db:"user_id" json:"user_id"`
+	TotalPrice uint64  `db:"total_price" json:"total_price"`
+	RiskRate   float64 `db:"risk_rate" json:"risk_rate"`
+	CircsLink  string  `db:"circs_link" json:"circs_link"`
 }
+
 // Cars - slice of cars
 type Cars []Car
 
@@ -22,7 +23,7 @@ type EventType uint8
 type EventStatus uint8
 
 const (
-	_       = EventType(iota)
+	_ = EventType(iota)
 	// Created - event for created car
 	Created // created
 	// Updated - event for updated car
@@ -31,7 +32,7 @@ const (
 	Removed // removed
 )
 const (
-	_         = EventStatus(iota)
+	_ = EventStatus(iota)
 	// Available - consumer can process this event
 	Available // available
 	// InProcess - this event is already locked by consumer

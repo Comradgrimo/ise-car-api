@@ -3,6 +3,7 @@ package repo
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
 	"github.com/ozonmp/ise-car-api/internal/database"
@@ -48,12 +49,15 @@ func (r *repo) Get(ctx context.Context, carID uint64) (*model.Car, error) {
 
 func (r *repo) Add(ctx context.Context, car *model.Car) (uint64, error) {
 	res, txErr := database.WithTx(ctx, r.db, func(ctx context.Context, tx *sqlx.Tx) (interface{}, error) {
-
 		id, err := addCar(ctx, car, tx)
 		if err != nil {
 			return id, err
 		}
-		if err := insertEvent(ctx, id, model.Created, tx); err != nil {
+		payload, err := getJsonBytes(car)
+		if err != nil {
+			return nil, err
+		}
+		if err := insertEvent(ctx, id, model.Created, payload, tx); err != nil {
 			return 0, err
 		}
 		return id, nil
@@ -87,7 +91,7 @@ func (r *repo) Remove(ctx context.Context, carID uint64) (bool, error) {
 		if err := removeCar(ctx, carID, tx); err != nil {
 			return nil, err
 		}
-		if err := insertEvent(ctx, carID, model.Removed, tx); err != nil {
+		if err := insertEvent(ctx, carID, model.Removed,"\"\"", tx); err != nil {
 			return nil, err
 		}
 		return nil, nil
@@ -147,11 +151,10 @@ func addCar(ctx context.Context, car *model.Car, tx *sqlx.Tx) (uint64, error) {
 		return 0, sql.ErrNoRows
 	}
 }
-func insertEvent(ctx context.Context, carID uint64, eventType model.EventType, tx *sqlx.Tx) error {
-
+func insertEvent(ctx context.Context, carID uint64, eventType model.EventType, payload string, tx *sqlx.Tx) error {
 	query := sb.Insert("car_event").
 		Columns("car_id", "type", "payload").
-		Values(carID, eventType.String(), "\"\"")
+		Values(carID, eventType.String(), payload)
 	s, args, err := query.ToSql()
 	if err != nil {
 		return err
@@ -159,4 +162,13 @@ func insertEvent(ctx context.Context, carID uint64, eventType model.EventType, t
 	_, err = tx.ExecContext(ctx, s, args...)
 
 	return err
+}
+
+func getJsonBytes(car *model.Car) (string, error) {
+	jsonBytes, err := json.Marshal(car)
+
+	if err != nil {
+		return "", err
+	}
+	return string(jsonBytes), err
 }
