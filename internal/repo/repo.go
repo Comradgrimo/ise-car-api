@@ -53,6 +53,7 @@ func (r *repo) Add(ctx context.Context, car *model.Car) (uint64, error) {
 		if err != nil {
 			return id, err
 		}
+		car.ID = id
 		payload, err := getJsonBytes(car)
 		if err != nil {
 			return nil, err
