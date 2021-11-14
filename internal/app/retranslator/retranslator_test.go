@@ -60,9 +60,9 @@ func TestStart(t *testing.T) {
 
 	repo.EXPECT().Remove(gomock.Any(), gomock.Any()).
 		DoAndReturn(func(ctx context.Context, ids []uint64) (bool, error) {
-		atomic.AddUint64(&removesCnt, 1)
-		return true, nil
-	}).AnyTimes()
+			atomic.AddUint64(&removesCnt, 1)
+			return true, nil
+		}).AnyTimes()
 	retranslator := NewRetranslator(cfg)
 
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.ConsumeTimeout)

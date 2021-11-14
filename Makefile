@@ -80,6 +80,7 @@ deps-go:
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking@latest
 	go install github.com/bufbuild/buf/cmd/protoc-gen-buf-lint@latest
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
+	go install golang.org/x/tools/cmd/stringer
 	go mod download
 .deps-python:
 	python3 -m pip install grpcio-tools grpclib protobuf

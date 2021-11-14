@@ -71,9 +71,7 @@ func (c *consumer) Start(ctx context.Context) {
 					continue
 				}
 				for _, event := range events {
-					if event.Type == model.Created {
-						c.events <- event
-					}
+					c.events <- event
 				}
 				select {
 				case <-ticker.C:

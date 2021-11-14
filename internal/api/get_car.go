@@ -34,12 +34,12 @@ func (o *carAPI) GetCarV1(
 	log.Debug().Msg("GetCarV1 - success")
 	return &pb.GetCarV1Response{
 		Value: &pb.Car{
-			Id:    car.ID,
-			CarInfo: car.CarInfo,
-			UserId: car.UserID,
+			Id:         car.ID,
+			CarInfo:    car.CarInfo,
+			UserId:     car.UserID,
 			TotalPrice: float32(car.TotalPrice),
-			RiskRate: float32(car.RiskRate),
-			CircsLink: car.CircsLink,
+			RiskRate:   float32(car.RiskRate),
+			CircsLink:  car.CircsLink,
 		},
 	}, nil
 }

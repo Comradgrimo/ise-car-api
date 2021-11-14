@@ -11,12 +11,16 @@ CREATE TABLE car (
       updated TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TYPE EVENT_STATUS AS ENUM ('in_process', 'available');
+CREATE TYPE EVENT_TYPE AS ENUM ('created', 'updated', 'removed');
+
 CREATE TABLE car_event (
      id SERIAL PRIMARY KEY,
      car_id BIGINT references car(id),
-     type TEXT NOT NULL,
-     status TEXT NOT NULL,
+     type EVENT_TYPE NOT NULL,
+     status EVENT_STATUS NOT NULL DEFAULT 'available',
      payload jsonb NOT NULL,
+     created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
      updated TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

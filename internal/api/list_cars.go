@@ -21,8 +21,8 @@ func (o *carAPI) ListCarsV1(ctx context.Context, req *pb.ListCarsV1Request) (*pb
 
 	return &pb.ListCarsV1Response{
 		Cars: cars,
-	}, nil}
-
+	}, nil
+}
 
 func convertCarToProtobuf(orig *model.Car) *pb.Car {
 	return &pb.Car{

@@ -9,22 +9,36 @@ type Car struct {
 	RiskRate   float64 `db:"risk_rate"`
 	CircsLink  string  `db:"circs_link"`
 }
+// Cars - slice of cars
 type Cars []Car
 
+//go:generate stringer -linecomment -type=EventType
+//go:generate stringer -linecomment -type=EventStatus
+
+// EventType - describes types of events (created, updated, removed)
 type EventType uint8
 
+// EventStatus - describes statuses for events (available, in_process)
 type EventStatus uint8
 
 const (
-	Created EventType = iota
-	Updated
-	Removed
+	_       = EventType(iota)
+	// Created - event for created car
+	Created // created
+	// Updated - event for updated car
+	Updated // updated
+	// Removed - event for removed car
+	Removed // removed
 )
 const (
-	Available EventStatus = iota
-	InProcess
+	_         = EventStatus(iota)
+	// Available - consumer can process this event
+	Available // available
+	// InProcess - this event is already locked by consumer
+	InProcess // in_process
 )
 
+// CarEvent - struct for CarEvent
 type CarEvent struct {
 	ID     uint64
 	Type   EventType

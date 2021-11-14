@@ -17,11 +17,11 @@ func (o *carAPI) RemoveCarV1(ctx context.Context, req *pb.RemoveCarV1Request) (*
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
-	_, err := o.repo.Remove(ctx, req.GetCarId())
+	found, err := o.repo.Remove(ctx, req.GetCarId())
 	if err != nil {
 		log.Error().Err(err).Msg("RemoveCarV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
-	return new(pb.RemoveCarV1Response), nil
+	return &pb.RemoveCarV1Response{Found: found}, nil
 }
