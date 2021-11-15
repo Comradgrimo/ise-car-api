@@ -4,6 +4,7 @@ import (
 	"context"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
+	"github.com/ozonmp/ise-car-api/internal/database"
 	"github.com/ozonmp/ise-car-api/internal/model"
 	"time"
 )
@@ -27,7 +28,16 @@ func NewEventRepo(db *sqlx.DB, batchSize uint) EventRepo {
 
 func (r *eventRepo) Lock(ctx context.Context, n uint64) ([]model.CarEvent, error) {
 	secondsInterval := 3 //todo jr fill it from config or something
-	const query = `update car_event
+	var events []model.CarEvent
+	_, txErr := database.WithTx(ctx, r.db, func(ctx context.Context, tx *sqlx.Tx) (interface{}, error) {
+		isAcquired, err := database.AcquireTryLock(ctx, tx, 0)
+		if err != nil {
+			return nil, err
+		}
+		if !isAcquired {
+			return nil, nil
+		}
+		const query = `update car_event
 				set status = :status, updated = now()
 				where car_id in (
 					select car_id from car_event
@@ -36,30 +46,33 @@ func (r *eventRepo) Lock(ctx context.Context, n uint64) ([]model.CarEvent, error
 						   from car_event
 						   where status = :status and now() - updated <= (:inter || 'sec')::interval
 					  )
-						and pg_try_advisory_xact_lock('car_event'::regclass::integer, car_id::integer)
 					order by created
 					limit :limit
 				)
 				returning car_event.*`
 
-	rows, err := r.db.NamedQueryContext(ctx, query, map[string]interface{}{
-		"status": model.InProcess.String(),
-		"limit":  n,
-		"inter":  secondsInterval,
-	})
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	var events []model.CarEvent
-	for rows.Next() {
-		var event model.CarEvent
-		err = rows.StructScan(&event)
+		rows, err := r.db.NamedQueryContext(ctx, query, map[string]interface{}{
+			"status": model.InProcess.String(),
+			"limit":  n,
+			"inter":  secondsInterval,
+		})
 		if err != nil {
 			return nil, err
 		}
-		events = append(events, event)
+		defer rows.Close()
+
+		for rows.Next() {
+			var event model.CarEvent
+			err = rows.StructScan(&event)
+			if err != nil {
+				return nil, err
+			}
+			events = append(events, event)
+		}
+		return events, nil
+	})
+	if txErr != nil {
+		return nil, txErr
 	}
 	return events, nil
 }
