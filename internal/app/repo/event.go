@@ -36,9 +36,11 @@ func (r *eventRepo) Lock(ctx context.Context, n uint64) ([]model.CarEvent, error
 						   from car_event
 						   where status = :status and now() - updated <= (:inter || 'sec')::interval
 					  )
+						and pg_try_advisory_xact_lock('car_event'::regclass::integer, car_id::integer)
 					order by created
 					limit :limit
-				)`
+				)
+				returning car_event.*`
 
 	rows, err := r.db.NamedQueryContext(ctx, query, map[string]interface{}{
 		"status": model.InProcess.String(),
