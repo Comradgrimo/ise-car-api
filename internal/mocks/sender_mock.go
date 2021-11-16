@@ -5,36 +5,35 @@
 package mocks
 
 import (
-	reflect "reflect"
-
 	gomock "github.com/golang/mock/gomock"
 	model "github.com/ozonmp/ise-car-api/internal/model"
+	reflect "reflect"
 )
 
-// MockEventSender is a mock of EventSender interface.
+// MockEventSender is a mock of EventSender interface
 type MockEventSender struct {
 	ctrl     *gomock.Controller
 	recorder *MockEventSenderMockRecorder
 }
 
-// MockEventSenderMockRecorder is the mock recorder for MockEventSender.
+// MockEventSenderMockRecorder is the mock recorder for MockEventSender
 type MockEventSenderMockRecorder struct {
 	mock *MockEventSender
 }
 
-// NewMockEventSender creates a new mock instance.
+// NewMockEventSender creates a new mock instance
 func NewMockEventSender(ctrl *gomock.Controller) *MockEventSender {
 	mock := &MockEventSender{ctrl: ctrl}
 	mock.recorder = &MockEventSenderMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use.
+// EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockEventSender) EXPECT() *MockEventSenderMockRecorder {
 	return m.recorder
 }
 
-// Send mocks base method.
+// Send mocks base method
 func (m *MockEventSender) Send(arg0 *model.CarEvent) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Send", arg0)
@@ -42,7 +41,7 @@ func (m *MockEventSender) Send(arg0 *model.CarEvent) error {
 	return ret0
 }
 
-// Send indicates an expected call of Send.
+// Send indicates an expected call of Send
 func (mr *MockEventSenderMockRecorder) Send(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockEventSender)(nil).Send), arg0)

@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='ozonmp.ise_car_api.v1',
   syntax='proto3',
   serialized_options=_b('Z9github.com/ozonmp/ise-car-api/pkg/ise-car-api;ise_car_api'),
-  serialized_pb=_b('\n\'ozonmp/ise_car_api/v1/ise_car_api.proto\x12\x15ozonmp.ise_car_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\"+\n\x03\x43\x61r\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x14\n\x05title\x18\x02 \x01(\tR\x05title\"6\n\x14\x44\x65scribeCarV1Request\x12\x1e\n\x06\x63\x61r_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x05\x63\x61rId\"I\n\x15\x44\x65scribeCarV1Response\x12\x30\n\x05value\x18\x01 \x01(\x0b\x32\x1a.ozonmp.ise_car_api.v1.CarR\x05value\"5\n\x12\x43reateCarV1Request\x12\x1f\n\x05title\x18\x01 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x64R\x05title\",\n\x13\x43reateCarV1Response\x12\x15\n\x06\x63\x61r_id\x18\x01 \x01(\x04R\x05\x63\x61rId\"\x13\n\x11ListCarsV1Request\"F\n\x12ListCarsV1Response\x12\x30\n\x05items\x18\x01 \x03(\x0b\x32\x1a.ozonmp.ise_car_api.v1.CarR\x05items\"4\n\x12RemoveCarV1Request\x12\x1e\n\x06\x63\x61r_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x05\x63\x61rId\"+\n\x13RemoveCarV1Response\x12\x14\n\x05\x66ound\x18\x01 \x01(\x08R\x05\x66ound2\x90\x04\n\x10IseCarApiService\x12\x85\x01\n\rDescribeCarV1\x12+.ozonmp.ise_car_api.v1.DescribeCarV1Request\x1a,.ozonmp.ise_car_api.v1.DescribeCarV1Response\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/cars/{car_id}\x12s\n\nListCarsV1\x12(.ozonmp.ise_car_api.v1.ListCarsV1Request\x1a).ozonmp.ise_car_api.v1.ListCarsV1Response\"\x10\x82\xd3\xe4\x93\x02\n\x12\x08/v1/cars\x12~\n\x0b\x43reateCarV1\x12).ozonmp.ise_car_api.v1.CreateCarV1Request\x1a*.ozonmp.ise_car_api.v1.CreateCarV1Response\"\x18\x82\xd3\xe4\x93\x02\x12\"\x10/v1/cars/{title}\x12\x7f\n\x0bRemoveCarV1\x12).ozonmp.ise_car_api.v1.RemoveCarV1Request\x1a*.ozonmp.ise_car_api.v1.RemoveCarV1Response\"\x19\x82\xd3\xe4\x93\x02\x13*\x11/v1/cars/{car_id}B;Z9github.com/ozonmp/ise-car-api/pkg/ise-car-api;ise_car_apib\x06proto3')
+  serialized_pb=_b('\n\'ozonmp/ise_car_api/v1/ise_car_api.proto\x12\x15ozonmp.ise_car_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\"\xa6\x01\n\x03\x43\x61r\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x19\n\x08\x63\x61r_info\x18\x02 \x01(\tR\x07\x63\x61rInfo\x12\x17\n\x07user_id\x18\x03 \x01(\x04R\x06userId\x12\x1f\n\x0btotal_price\x18\x04 \x01(\x04R\ntotalPrice\x12\x1b\n\trisk_rate\x18\x05 \x01(\x02R\x08riskRate\x12\x1d\n\ncircs_link\x18\x06 \x01(\tR\tcircsLink\"1\n\x0fGetCarV1Request\x12\x1e\n\x06\x63\x61r_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x05\x63\x61rId\"D\n\x10GetCarV1Response\x12\x30\n\x05value\x18\x01 \x01(\x0b\x32\x1a.ozonmp.ise_car_api.v1.CarR\x05value\"\xd6\x01\n\x0f\x41\x64\x64\x43\x61rV1Request\x12$\n\x08\x63\x61r_info\x18\x01 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x64R\x07\x63\x61rInfo\x12 \n\x07user_id\x18\x02 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x06userId\x12(\n\x0btotal_price\x18\x03 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\ntotalPrice\x12\'\n\trisk_rate\x18\x04 \x01(\x02\x42\n\xfa\x42\x07\n\x05%\x00\x00\x00\x00R\x08riskRate\x12(\n\ncircs_link\x18\x05 \x01(\tB\t\xfa\x42\x06r\x04\x10\x01\x18\x64R\tcircsLink\")\n\x10\x41\x64\x64\x43\x61rV1Response\x12\x15\n\x06\x63\x61r_id\x18\x01 \x01(\x04R\x05\x63\x61rId\"S\n\x11ListCarsV1Request\x12\x1f\n\x06\x63ursor\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x06\x63ursor\x12\x1d\n\x05limit\x18\x02 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x05limit\"D\n\x12ListCarsV1Response\x12.\n\x04\x63\x61rs\x18\x01 \x03(\x0b\x32\x1a.ozonmp.ise_car_api.v1.CarR\x04\x63\x61rs\"4\n\x12RemoveCarV1Request\x12\x1e\n\x06\x63\x61r_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x05\x63\x61rId\"+\n\x13RemoveCarV1Response\x12\x14\n\x05\x66ound\x18\x01 \x01(\x08R\x05\x66ound2\x80\x04\n\x10IseCarApiService\x12v\n\x08GetCarV1\x12&.ozonmp.ise_car_api.v1.GetCarV1Request\x1a\'.ozonmp.ise_car_api.v1.GetCarV1Response\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/cars/{car_id}\x12{\n\nListCarsV1\x12(.ozonmp.ise_car_api.v1.ListCarsV1Request\x1a).ozonmp.ise_car_api.v1.ListCarsV1Response\"\x18\x82\xd3\xe4\x93\x02\x12\"\r/v1/cars/list:\x01*\x12t\n\x08\x41\x64\x64\x43\x61rV1\x12&.ozonmp.ise_car_api.v1.AddCarV1Request\x1a\'.ozonmp.ise_car_api.v1.AddCarV1Response\"\x17\x82\xd3\xe4\x93\x02\x11\"\x0c/v1/cars/add:\x01*\x12\x80\x01\n\x0bRemoveCarV1\x12).ozonmp.ise_car_api.v1.RemoveCarV1Request\x1a*.ozonmp.ise_car_api.v1.RemoveCarV1Response\"\x1a\x82\xd3\xe4\x93\x02\x14\"\x0f/v1/cars/delete:\x01*B;Z9github.com/ozonmp/ise-car-api/pkg/ise-car-api;ise_car_apib\x06proto3')
   ,
   dependencies=[validate_dot_validate__pb2.DESCRIPTOR,google_dot_api_dot_annotations__pb2.DESCRIPTOR,])
 
@@ -43,12 +43,40 @@ _CAR = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, json_name='id', file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='title', full_name='ozonmp.ise_car_api.v1.Car.title', index=1,
+      name='car_info', full_name='ozonmp.ise_car_api.v1.Car.car_info', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, json_name='title', file=DESCRIPTOR),
+      serialized_options=None, json_name='carInfo', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='user_id', full_name='ozonmp.ise_car_api.v1.Car.user_id', index=2,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='userId', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='total_price', full_name='ozonmp.ise_car_api.v1.Car.total_price', index=3,
+      number=4, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='totalPrice', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='risk_rate', full_name='ozonmp.ise_car_api.v1.Car.risk_rate', index=4,
+      number=5, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='riskRate', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='circs_link', full_name='ozonmp.ise_car_api.v1.Car.circs_link', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, json_name='circsLink', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -61,20 +89,20 @@ _CAR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=121,
-  serialized_end=164,
+  serialized_start=122,
+  serialized_end=288,
 )
 
 
-_DESCRIBECARV1REQUEST = _descriptor.Descriptor(
-  name='DescribeCarV1Request',
-  full_name='ozonmp.ise_car_api.v1.DescribeCarV1Request',
+_GETCARV1REQUEST = _descriptor.Descriptor(
+  name='GetCarV1Request',
+  full_name='ozonmp.ise_car_api.v1.GetCarV1Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='car_id', full_name='ozonmp.ise_car_api.v1.DescribeCarV1Request.car_id', index=0,
+      name='car_id', full_name='ozonmp.ise_car_api.v1.GetCarV1Request.car_id', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -92,20 +120,20 @@ _DESCRIBECARV1REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=166,
-  serialized_end=220,
+  serialized_start=290,
+  serialized_end=339,
 )
 
 
-_DESCRIBECARV1RESPONSE = _descriptor.Descriptor(
-  name='DescribeCarV1Response',
-  full_name='ozonmp.ise_car_api.v1.DescribeCarV1Response',
+_GETCARV1RESPONSE = _descriptor.Descriptor(
+  name='GetCarV1Response',
+  full_name='ozonmp.ise_car_api.v1.GetCarV1Response',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='ozonmp.ise_car_api.v1.DescribeCarV1Response.value', index=0,
+      name='value', full_name='ozonmp.ise_car_api.v1.GetCarV1Response.value', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -123,25 +151,53 @@ _DESCRIBECARV1RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=222,
-  serialized_end=295,
+  serialized_start=341,
+  serialized_end=409,
 )
 
 
-_CREATECARV1REQUEST = _descriptor.Descriptor(
-  name='CreateCarV1Request',
-  full_name='ozonmp.ise_car_api.v1.CreateCarV1Request',
+_ADDCARV1REQUEST = _descriptor.Descriptor(
+  name='AddCarV1Request',
+  full_name='ozonmp.ise_car_api.v1.AddCarV1Request',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='title', full_name='ozonmp.ise_car_api.v1.CreateCarV1Request.title', index=0,
+      name='car_info', full_name='ozonmp.ise_car_api.v1.AddCarV1Request.car_info', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=_b('\372B\006r\004\020\001\030d'), json_name='title', file=DESCRIPTOR),
+      serialized_options=_b('\372B\006r\004\020\001\030d'), json_name='carInfo', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='user_id', full_name='ozonmp.ise_car_api.v1.AddCarV1Request.user_id', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=_b('\372B\0042\002 \000'), json_name='userId', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='total_price', full_name='ozonmp.ise_car_api.v1.AddCarV1Request.total_price', index=2,
+      number=3, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=_b('\372B\0042\002 \000'), json_name='totalPrice', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='risk_rate', full_name='ozonmp.ise_car_api.v1.AddCarV1Request.risk_rate', index=3,
+      number=4, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=_b('\372B\007\n\005%\000\000\000\000'), json_name='riskRate', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='circs_link', full_name='ozonmp.ise_car_api.v1.AddCarV1Request.circs_link', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=_b('\372B\006r\004\020\001\030d'), json_name='circsLink', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -154,20 +210,20 @@ _CREATECARV1REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=297,
-  serialized_end=350,
+  serialized_start=412,
+  serialized_end=626,
 )
 
 
-_CREATECARV1RESPONSE = _descriptor.Descriptor(
-  name='CreateCarV1Response',
-  full_name='ozonmp.ise_car_api.v1.CreateCarV1Response',
+_ADDCARV1RESPONSE = _descriptor.Descriptor(
+  name='AddCarV1Response',
+  full_name='ozonmp.ise_car_api.v1.AddCarV1Response',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='car_id', full_name='ozonmp.ise_car_api.v1.CreateCarV1Response.car_id', index=0,
+      name='car_id', full_name='ozonmp.ise_car_api.v1.AddCarV1Response.car_id', index=0,
       number=1, type=4, cpp_type=4, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -185,8 +241,8 @@ _CREATECARV1RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=352,
-  serialized_end=396,
+  serialized_start=628,
+  serialized_end=669,
 )
 
 
@@ -197,6 +253,20 @@ _LISTCARSV1REQUEST = _descriptor.Descriptor(
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='cursor', full_name='ozonmp.ise_car_api.v1.ListCarsV1Request.cursor', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=_b('\372B\0042\002 \000'), json_name='cursor', file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='ozonmp.ise_car_api.v1.ListCarsV1Request.limit', index=1,
+      number=2, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=_b('\372B\0042\002 \000'), json_name='limit', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -209,8 +279,8 @@ _LISTCARSV1REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=398,
-  serialized_end=417,
+  serialized_start=671,
+  serialized_end=754,
 )
 
 
@@ -222,12 +292,12 @@ _LISTCARSV1RESPONSE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='items', full_name='ozonmp.ise_car_api.v1.ListCarsV1Response.items', index=0,
+      name='cars', full_name='ozonmp.ise_car_api.v1.ListCarsV1Response.cars', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, json_name='items', file=DESCRIPTOR),
+      serialized_options=None, json_name='cars', file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -240,8 +310,8 @@ _LISTCARSV1RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=419,
-  serialized_end=489,
+  serialized_start=756,
+  serialized_end=824,
 )
 
 
@@ -271,8 +341,8 @@ _REMOVECARV1REQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=491,
-  serialized_end=543,
+  serialized_start=826,
+  serialized_end=878,
 )
 
 
@@ -302,17 +372,17 @@ _REMOVECARV1RESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=545,
-  serialized_end=588,
+  serialized_start=880,
+  serialized_end=923,
 )
 
-_DESCRIBECARV1RESPONSE.fields_by_name['value'].message_type = _CAR
-_LISTCARSV1RESPONSE.fields_by_name['items'].message_type = _CAR
+_GETCARV1RESPONSE.fields_by_name['value'].message_type = _CAR
+_LISTCARSV1RESPONSE.fields_by_name['cars'].message_type = _CAR
 DESCRIPTOR.message_types_by_name['Car'] = _CAR
-DESCRIPTOR.message_types_by_name['DescribeCarV1Request'] = _DESCRIBECARV1REQUEST
-DESCRIPTOR.message_types_by_name['DescribeCarV1Response'] = _DESCRIBECARV1RESPONSE
-DESCRIPTOR.message_types_by_name['CreateCarV1Request'] = _CREATECARV1REQUEST
-DESCRIPTOR.message_types_by_name['CreateCarV1Response'] = _CREATECARV1RESPONSE
+DESCRIPTOR.message_types_by_name['GetCarV1Request'] = _GETCARV1REQUEST
+DESCRIPTOR.message_types_by_name['GetCarV1Response'] = _GETCARV1RESPONSE
+DESCRIPTOR.message_types_by_name['AddCarV1Request'] = _ADDCARV1REQUEST
+DESCRIPTOR.message_types_by_name['AddCarV1Response'] = _ADDCARV1RESPONSE
 DESCRIPTOR.message_types_by_name['ListCarsV1Request'] = _LISTCARSV1REQUEST
 DESCRIPTOR.message_types_by_name['ListCarsV1Response'] = _LISTCARSV1RESPONSE
 DESCRIPTOR.message_types_by_name['RemoveCarV1Request'] = _REMOVECARV1REQUEST
@@ -326,33 +396,33 @@ Car = _reflection.GeneratedProtocolMessageType('Car', (_message.Message,), dict(
   ))
 _sym_db.RegisterMessage(Car)
 
-DescribeCarV1Request = _reflection.GeneratedProtocolMessageType('DescribeCarV1Request', (_message.Message,), dict(
-  DESCRIPTOR = _DESCRIBECARV1REQUEST,
+GetCarV1Request = _reflection.GeneratedProtocolMessageType('GetCarV1Request', (_message.Message,), dict(
+  DESCRIPTOR = _GETCARV1REQUEST,
   __module__ = 'ozonmp.ise_car_api.v1.ise_car_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.DescribeCarV1Request)
+  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.GetCarV1Request)
   ))
-_sym_db.RegisterMessage(DescribeCarV1Request)
+_sym_db.RegisterMessage(GetCarV1Request)
 
-DescribeCarV1Response = _reflection.GeneratedProtocolMessageType('DescribeCarV1Response', (_message.Message,), dict(
-  DESCRIPTOR = _DESCRIBECARV1RESPONSE,
+GetCarV1Response = _reflection.GeneratedProtocolMessageType('GetCarV1Response', (_message.Message,), dict(
+  DESCRIPTOR = _GETCARV1RESPONSE,
   __module__ = 'ozonmp.ise_car_api.v1.ise_car_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.DescribeCarV1Response)
+  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.GetCarV1Response)
   ))
-_sym_db.RegisterMessage(DescribeCarV1Response)
+_sym_db.RegisterMessage(GetCarV1Response)
 
-CreateCarV1Request = _reflection.GeneratedProtocolMessageType('CreateCarV1Request', (_message.Message,), dict(
-  DESCRIPTOR = _CREATECARV1REQUEST,
+AddCarV1Request = _reflection.GeneratedProtocolMessageType('AddCarV1Request', (_message.Message,), dict(
+  DESCRIPTOR = _ADDCARV1REQUEST,
   __module__ = 'ozonmp.ise_car_api.v1.ise_car_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.CreateCarV1Request)
+  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.AddCarV1Request)
   ))
-_sym_db.RegisterMessage(CreateCarV1Request)
+_sym_db.RegisterMessage(AddCarV1Request)
 
-CreateCarV1Response = _reflection.GeneratedProtocolMessageType('CreateCarV1Response', (_message.Message,), dict(
-  DESCRIPTOR = _CREATECARV1RESPONSE,
+AddCarV1Response = _reflection.GeneratedProtocolMessageType('AddCarV1Response', (_message.Message,), dict(
+  DESCRIPTOR = _ADDCARV1RESPONSE,
   __module__ = 'ozonmp.ise_car_api.v1.ise_car_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.CreateCarV1Response)
+  # @@protoc_insertion_point(class_scope:ozonmp.ise_car_api.v1.AddCarV1Response)
   ))
-_sym_db.RegisterMessage(CreateCarV1Response)
+_sym_db.RegisterMessage(AddCarV1Response)
 
 ListCarsV1Request = _reflection.GeneratedProtocolMessageType('ListCarsV1Request', (_message.Message,), dict(
   DESCRIPTOR = _LISTCARSV1REQUEST,
@@ -384,8 +454,14 @@ _sym_db.RegisterMessage(RemoveCarV1Response)
 
 
 DESCRIPTOR._options = None
-_DESCRIBECARV1REQUEST.fields_by_name['car_id']._options = None
-_CREATECARV1REQUEST.fields_by_name['title']._options = None
+_GETCARV1REQUEST.fields_by_name['car_id']._options = None
+_ADDCARV1REQUEST.fields_by_name['car_info']._options = None
+_ADDCARV1REQUEST.fields_by_name['user_id']._options = None
+_ADDCARV1REQUEST.fields_by_name['total_price']._options = None
+_ADDCARV1REQUEST.fields_by_name['risk_rate']._options = None
+_ADDCARV1REQUEST.fields_by_name['circs_link']._options = None
+_LISTCARSV1REQUEST.fields_by_name['cursor']._options = None
+_LISTCARSV1REQUEST.fields_by_name['limit']._options = None
 _REMOVECARV1REQUEST.fields_by_name['car_id']._options = None
 
 _ISECARAPISERVICE = _descriptor.ServiceDescriptor(
@@ -394,16 +470,16 @@ _ISECARAPISERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=591,
-  serialized_end=1119,
+  serialized_start=926,
+  serialized_end=1438,
   methods=[
   _descriptor.MethodDescriptor(
-    name='DescribeCarV1',
-    full_name='ozonmp.ise_car_api.v1.IseCarApiService.DescribeCarV1',
+    name='GetCarV1',
+    full_name='ozonmp.ise_car_api.v1.IseCarApiService.GetCarV1',
     index=0,
     containing_service=None,
-    input_type=_DESCRIBECARV1REQUEST,
-    output_type=_DESCRIBECARV1RESPONSE,
+    input_type=_GETCARV1REQUEST,
+    output_type=_GETCARV1RESPONSE,
     serialized_options=_b('\202\323\344\223\002\023\022\021/v1/cars/{car_id}'),
   ),
   _descriptor.MethodDescriptor(
@@ -413,16 +489,16 @@ _ISECARAPISERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_LISTCARSV1REQUEST,
     output_type=_LISTCARSV1RESPONSE,
-    serialized_options=_b('\202\323\344\223\002\n\022\010/v1/cars'),
+    serialized_options=_b('\202\323\344\223\002\022\"\r/v1/cars/list:\001*'),
   ),
   _descriptor.MethodDescriptor(
-    name='CreateCarV1',
-    full_name='ozonmp.ise_car_api.v1.IseCarApiService.CreateCarV1',
+    name='AddCarV1',
+    full_name='ozonmp.ise_car_api.v1.IseCarApiService.AddCarV1',
     index=2,
     containing_service=None,
-    input_type=_CREATECARV1REQUEST,
-    output_type=_CREATECARV1RESPONSE,
-    serialized_options=_b('\202\323\344\223\002\022\"\020/v1/cars/{title}'),
+    input_type=_ADDCARV1REQUEST,
+    output_type=_ADDCARV1RESPONSE,
+    serialized_options=_b('\202\323\344\223\002\021\"\014/v1/cars/add:\001*'),
   ),
   _descriptor.MethodDescriptor(
     name='RemoveCarV1',
@@ -431,7 +507,7 @@ _ISECARAPISERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_REMOVECARV1REQUEST,
     output_type=_REMOVECARV1RESPONSE,
-    serialized_options=_b('\202\323\344\223\002\023*\021/v1/cars/{car_id}'),
+    serialized_options=_b('\202\323\344\223\002\024\"\017/v1/cars/delete:\001*'),
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_ISECARAPISERVICE)

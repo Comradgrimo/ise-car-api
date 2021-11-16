@@ -17,19 +17,21 @@ func TestStart(t *testing.T) {
 			ID:     0,
 			Type:   model.Created,
 			Status: model.InProcess,
-			Entity: &model.Car{ID: 0, Title: "Toyota"},
+			Entity: &model.Car{ID: 0, CarInfo: "Toyota"},
 		},
 		{
 			ID:     1,
 			Type:   model.Created,
 			Status: model.InProcess,
-			Entity: &model.Car{ID: 1, Title: "Lexus"},
+			Entity: &model.Car{ID: 1, CarInfo: "Lexus"},
 		},
 	}
+
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 	repo := mocks.NewMockEventRepo(ctrl)
-	repo.EXPECT().Lock(uint64(len(events))).Return(events, nil).Times(1)
+
+	repo.EXPECT().Lock(gomock.Any(), uint64(len(events))).Return(events, nil).Times(1)
 
 	eventChan := make(chan model.CarEvent)
 

@@ -10,6 +10,7 @@ import (
 )
 
 var (
+	//nolint
 	totalCarNotFound = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "ise_car_api_car_not_found_total",
 		Help: "Total number of cars that were not found",

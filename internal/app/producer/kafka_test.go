@@ -1,6 +1,7 @@
 package producer
 
 import (
+	"context"
 	"errors"
 	"testing"
 	"time"
@@ -19,13 +20,13 @@ func TestStart(t *testing.T) {
 			ID:     0,
 			Type:   model.Created,
 			Status: model.InProcess,
-			Entity: &model.Car{ID: 0, Title: "Toyota"},
+			Entity: &model.Car{ID: 0, CarInfo: "Toyota"},
 		},
 		{
 			ID:     1,
 			Type:   model.Created,
 			Status: model.InProcess,
-			Entity: &model.Car{ID: 1, Title: "Lexus"},
+			Entity: &model.Car{ID: 1, CarInfo: "Lexus"},
 		},
 	}
 	ctrl := gomock.NewController(t)
@@ -43,16 +44,17 @@ func TestStart(t *testing.T) {
 		repo,
 		workerPool,
 	)
+	ctx := context.Background()
 
 	// successfully sent to kafka -> should remove from db
 	eventSender.EXPECT().Send(&events[0]).Return(nil).Times(1)
-	repo.EXPECT().Remove([]uint64{events[0].ID}).Return(nil).Times(1)
+	repo.EXPECT().Remove(ctx, []uint64{events[0].ID}).Return(true, nil).Times(1)
 
 	// failed to send to kafka -> unlock event in db
 	eventSender.EXPECT().Send(&events[1]).Return(errors.New("failed to pass event to kafka")).Times(1)
-	repo.EXPECT().Unlock([]uint64{events[1].ID}).Return(nil).Times(1)
+	repo.EXPECT().Unlock(ctx, []uint64{events[1].ID}).Return(nil).Times(1)
 
-	producer.Start()
+	producer.Start(ctx)
 	defer producer.Close()
 
 	timeout := time.After(time.Second)
