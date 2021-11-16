@@ -28,9 +28,10 @@ func NewEventRepo(db *sqlx.DB, batchSize uint) EventRepo {
 
 func (r *eventRepo) Lock(ctx context.Context, n uint64) ([]model.CarEvent, error) {
 	secondsInterval := 3 //todo jr fill it from config or something
+	var lockID int32 = 0
 	var events []model.CarEvent
 	_, txErr := database.WithTx(ctx, r.db, func(ctx context.Context, tx *sqlx.Tx) (interface{}, error) {
-		isAcquired, err := database.AcquireTryLock(ctx, tx, 0)
+		isAcquired, err := database.AcquireTryLock(ctx, tx, lockID)
 		if err != nil {
 			return nil, err
 		}
@@ -46,7 +47,7 @@ func (r *eventRepo) Lock(ctx context.Context, n uint64) ([]model.CarEvent, error
 						   from car_event
 						   where status = :status and now() - updated <= (:inter || 'sec')::interval
 					  )
-					order by created
+					order by car_id,  created
 					limit :limit
 				)
 				returning car_event.*`
