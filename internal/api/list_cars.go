@@ -2,17 +2,20 @@ package api
 
 import (
 	"context"
+	"github.com/ozonmp/ise-car-api/internal/logger"
 	"github.com/ozonmp/ise-car-api/internal/model"
 	pb "github.com/ozonmp/ise-car-api/pkg/ise-car-api"
-	"github.com/rs/zerolog/log"
 )
 
 func (o *carAPI) ListCarsV1(ctx context.Context, req *pb.ListCarsV1Request) (*pb.ListCarsV1Response, error) {
-	log.Debug().Msg("ListCarsV1 called")
+	ctx = setLogLevelFromHeader(ctx)
+	logger.DebugKV(ctx, "ListCarsV1 called")
+
 	dbCars, err := o.repo.List(ctx, req.GetCursor(), req.GetLimit())
 	if err != nil {
 		return nil, err
 	}
+	logger.DebugKV(ctx, "ListCarsV1 -- success")
 
 	cars := make([]*pb.Car, len(dbCars))
 	for idx := range dbCars {
