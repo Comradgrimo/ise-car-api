@@ -52,8 +52,7 @@ func setLogLevelFromHeader(ctx context.Context) context.Context {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if ok {
 		levels := md.Get("log-level")
-		//todo jr delete the line below
-		logger.InfoKV(ctx, "got log level", "levels", levels)
+		logger.DebugKV(ctx, "got log level", "levels", levels)
 		if len(levels) > 0 {
 			if parsedLevel, ok := parseLogLevel(levels[0]); ok {
 				newLogger := logger.CloneWithLevel(ctx, parsedLevel)

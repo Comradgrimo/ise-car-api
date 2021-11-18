@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	sq "github.com/Masterminds/squirrel"
 	"github.com/jmoiron/sqlx"
+	"github.com/opentracing/opentracing-go"
 	"github.com/ozonmp/ise-car-api/internal/database"
 	"time"
 
@@ -33,6 +34,9 @@ func NewRepo(db *sqlx.DB, batchSize uint) Repo {
 var sb = sq.StatementBuilder.PlaceholderFormat(sq.Dollar)
 
 func (r *repo) Get(ctx context.Context, carID uint64) (*model.Car, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "repo.Get")
+	defer span.Finish()
+
 	query := sb.Select("id, car_info, user_id, total_price, risk_rate, circs_link").
 		From("car").Where(sq.And{sq.Eq{"id": carID}, sq.Eq{"removed": false}})
 
@@ -48,6 +52,9 @@ func (r *repo) Get(ctx context.Context, carID uint64) (*model.Car, error) {
 }
 
 func (r *repo) Add(ctx context.Context, car *model.Car) (uint64, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "repo.Add")
+	defer span.Finish()
+
 	res, txErr := database.WithTx(ctx, r.db, func(ctx context.Context, tx *sqlx.Tx) (interface{}, error) {
 		id, err := addCar(ctx, car, tx)
 		if err != nil {
@@ -71,6 +78,9 @@ func (r *repo) Add(ctx context.Context, car *model.Car) (uint64, error) {
 }
 
 func (r *repo) List(ctx context.Context, cursor uint64, limit uint64) (model.Cars, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "repo.List")
+	defer span.Finish()
+
 	query := sq.Select("id, car_info, user_id, total_price, risk_rate, circs_link").
 		From("car").
 		Offset(cursor).Limit(limit)
@@ -88,6 +98,9 @@ func (r *repo) List(ctx context.Context, cursor uint64, limit uint64) (model.Car
 }
 
 func (r *repo) Remove(ctx context.Context, carID uint64) (bool, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "repo.Remove")
+	defer span.Finish()
+
 	_, txErr := database.WithTx(ctx, r.db, func(ctx context.Context, tx *sqlx.Tx) (interface{}, error) {
 		if err := removeCar(ctx, carID, tx); err != nil {
 			return nil, err
