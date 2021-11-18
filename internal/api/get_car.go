@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/ozonmp/ise-car-api/internal/logger"
+	metr "github.com/ozonmp/ise-car-api/internal/metrics"
 	pb "github.com/ozonmp/ise-car-api/pkg/ise-car-api"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -18,15 +19,15 @@ func (o *carAPI) GetCarV1(
 	logger.InfoKV(ctx, fmt.Sprintf("GetCarV1 called: id=%v", req.GetCarId()))
 
 	if err := req.Validate(); err != nil {
-		logger.ErrorKV(ctx,"GetCarV1 - invalid argument")
+		logger.ErrorKV(ctx, "GetCarV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	car, err := o.repo.Get(ctx, req.GetCarId())
 	if err != nil {
-		logger.ErrorKV(ctx,"GetCarV1 -- failed to get car by id", "carID", req.CarId)
-
+		logger.ErrorKV(ctx, "GetCarV1 -- failed to get car by id", "carID", req.CarId)
+		metr.EventsNotFoundTotal.Inc()
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 

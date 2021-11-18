@@ -124,7 +124,7 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 	go func() {
 		time.Sleep(2 * time.Second)
 		isReady.Store(true)
-		logger.InfoKV(ctx,"The service is ready to accept requests")
+		logger.InfoKV(ctx, "The service is ready to accept requests")
 	}()
 
 	if cfg.Project.Debug {
@@ -158,7 +158,7 @@ func (s *GrpcServer) Start(cfg *config.Config) error {
 	if err := metricsServer.Shutdown(ctx); err != nil {
 		log.Error().Err(err).Msg("metricsServer.Shutdown")
 	} else {
-		logger.InfoKV(ctx,"metricsServer shut down correctly")
+		logger.InfoKV(ctx, "metricsServer shut down correctly")
 	}
 
 	grpcServer.GracefulStop()
