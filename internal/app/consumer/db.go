@@ -2,6 +2,7 @@ package consumer
 
 import (
 	"context"
+	metr "github.com/ozonmp/ise-car-api/internal/metrics"
 	"math/rand"
 	"sync"
 	"time"
@@ -72,6 +73,7 @@ func (c *consumer) Start(ctx context.Context) {
 					continue
 				}
 				for _, event := range events {
+					metr.EventsProcessedTotal.Inc()
 					c.events <- event
 				}
 				select {
